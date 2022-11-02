@@ -1,0 +1,14 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <button @onclick="Logout">Logout</button>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("token");
+        await _authStateProvider.GetAuthenticationStateAsync();
+        _navigationManager.NavigateTo("/login");
+    }
+}

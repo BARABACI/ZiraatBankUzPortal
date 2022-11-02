@@ -1,0 +1,176 @@
+﻿@page "/users"
+@inject IDialogService DialogService
+@inject NavigationManager navigationManager
+@inject HttpClient Http
+@attribute [Authorize(Roles = "Admin")]
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<br />
+<MudTable Hover="true" Elevation="10" Items="user" Filter="new Func<DisplayUserModel, bool>(Search)" @bind-user="user" Striped="true" Dense="true" Bordered="true">
+    <ToolBarContent>
+        <div class="justify-center mud-text-align-center">
+            @if (true)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => CreateUserModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">Register New User</MudButton>
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="OnParametersSetAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                @if (_canExportUsers)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
+                }
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="OnParametersSetAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                @if (true)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
+                }
+            }
+        </div>
+        <MudSpacer />
+        @if (true)
+        {
+            <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Users" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        }
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
+        <MudTh Style="text-align:right">Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="FirstName">
+            <MudHighlighter Text="@context.Firstname" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="LastName">
+            <MudHighlighter Text="@context.Lastname" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="UserName">
+            <MudHighlighter Text="@context.Title" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Email">
+            <MudHighlighter Text="@context.Position" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="PhoneNumber">
+            <MudHighlighter Text="@context.IPT" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Actions" Style="text-align:right">
+            <MudMenu Label="Actions" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
+                <MudMenuItem OnClick="(() => EditUserModal(context.Id))">View Profile</MudMenuItem>
+                <MudMenuItem OnClick="(() => DeleteUserModal(context.Id))">Delete Profile</MudMenuItem>
+            </MudMenu>
+        </MudTd>
+    </RowTemplate>
+    <FooterContent>
+
+    </FooterContent>
+    <PagerContent>
+        <MudTablePager></MudTablePager>
+    </PagerContent>
+</MudTable>
+
+@code {
+
+    private IEnumerable<DisplayUserModel>? user;
+    private string _searchString = "";
+    private bool _canCreateUsers;
+    private bool _canSearchUsers;
+    private bool _canExportUsers;
+    protected override async Task OnParametersSetAsync()
+    {
+        user = await Http.GetFromJsonAsync<IEnumerable<DisplayUserModel>>("api/User/Getall");
+    }
+
+    private bool Search(DisplayUserModel user)
+    {
+        if (string.IsNullOrWhiteSpace(_searchString)) return true;
+        if (user.Firstname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        if (user.Lastname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        if (user.Title?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        if (user.Position?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        if (user.IPT?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private async Task CreateUserModal()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true };
+        var dialog = DialogService.Show<CreateUser>("Register New User", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await OnParametersSetAsync();
+        }
+    }
+
+    private async Task EditUserModal(int UserId)
+    {
+        var parameters = new DialogParameters
+            {
+                {nameof(CreateUser.userId),UserId}
+            };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true };
+        var dialog = DialogService.Show<CreateUser>("Edit User", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await OnParametersSetAsync();
+        }
+    }
+
+    private async Task DeleteUserModal(int UserId)
+    {
+        var parameters = new DialogParameters
+            {
+                {nameof(DeleteDialog.ContentText), string.Format("Do you want delete the user with Id "+UserId)}
+            };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+        var dialog = DialogService.Show<DeleteDialog>("Delete User", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {          
+            var response = await Http.DeleteAsync("api/User/DeleteUser/" + UserId);
+            await OnParametersSetAsync();
+        }
+    }
+
+
+    /*
+    private async Task ExportToExcel()
+    {
+    var base64 = await _userManager.ExportToExcelAsync(_searchString);
+    await _jsRuntime.InvokeVoidAsync("Download", new
+        {
+        ByteArray = base64,
+        FileName = $"{nameof(Users).ToLower()}_{DateTime.Now:ddMMyyyyHHmmss}.xlsx",
+        MimeType = ApplicationConstants.MimeTypes.OpenXml
+    });
+    _snackBar.Add(string.IsNullOrWhiteSpace(_searchString)
+        ? _localizer["Users exported"]
+        : _localizer["Filtered Users exported"], Severity.Success);
+    }
+    */
+}

@@ -1,0 +1,56 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="@($"background:{Colors.Red.Accent4};")">     
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <LoginLogoutButton />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+        <MudDrawerHeader>
+            <MudImage Fluid="true" Src="images/logo-ziraat.png" Alt="Ziraat Bank Logo" Class="rounded-lg" />
+        </MudDrawerHeader>
+        <NavMenu></NavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = true;
+    private bool _rightToLeft = false;
+    string userId, userName, userRole;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUserDataAsync();
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private async Task LoadUserDataAsync()
+    {
+        var state = await _authStateProvider.GetAuthenticationStateAsync();
+        var user = new ClaimsPrincipal(state.User.Identity);
+        if (user.Identity.IsAuthenticated)
+        {
+            userId = user.GetId();
+            userName = user.GetName();
+            userRole = user.GetRole();
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/login");
+        }
+    }
+
+}

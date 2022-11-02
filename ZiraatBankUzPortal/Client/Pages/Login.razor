@@ -1,0 +1,59 @@
+﻿@page "/login"
+@inject HttpClient Http
+@attribute [AllowAnonymous]
+@layout SimpleLayout
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
+    <MudPaper Elevation="25" Class="pa-9" Style="width: 450px;">
+        <EditForm Model="@user" OnValidSubmit="HandleLogin">
+            <MudGrid>
+                <DataAnnotationsValidator />
+                <MudItem xs="12">
+                        <MudImage Src="images/logo-ziraat.png" />
+                </MudItem>
+                <MudItem xs="12">
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h4">Login Page</MudText>
+                    </div>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField T="string" Label="User Name" Variant="Variant.Outlined"
+                                  @bind-Value="user.UserName" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Password" Variant="Variant.Outlined"
+                                  @bind-Value="user.Password" InputType="InputType.Password" />
+                </MudItem>
+                <MudItem xs="12" Class="d-flex justify-center">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" Style="width: 100%;">Sign In</MudButton>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    DisplayLoginUserModel user = new DisplayLoginUserModel();
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await _authStateProvider.GetAuthenticationStateAsync();
+        var user = new ClaimsPrincipal(state.User.Identity);
+        if (user.Identity.IsAuthenticated)
+        {
+            _navigationManager.NavigateTo("/");
+        }
+    }
+    async Task HandleLogin()
+    {
+        user = await Http.GetFromJsonAsync<DisplayLoginUserModel>("api/UserLogin/" + user.UserName + "/" + user.Password);
+
+        if (user.UserName != "" && user.Password != "")
+        {
+            var token = user.AccessToken;
+            await _localStorage.SetItemAsync("token", token);
+            await _authStateProvider.GetAuthenticationStateAsync();
+            _navigationManager.NavigateTo("/");
+        }
+
+
+    }
+}
