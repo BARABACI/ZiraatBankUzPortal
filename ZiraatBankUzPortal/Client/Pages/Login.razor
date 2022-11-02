@@ -2,29 +2,28 @@
 @inject HttpClient Http
 @attribute [AllowAnonymous]
 @layout SimpleLayout
+@inject IStringLocalizer<Login> _localizer
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
     <MudPaper Elevation="25" Class="pa-9" Style="width: 450px;">
         <EditForm Model="@user" OnValidSubmit="HandleLogin">
             <MudGrid>
                 <DataAnnotationsValidator />
+                <MudItem xs="1" Class="align-content-center">
+                        <MudImage Src="images/only-logo-ziraat.png" Height="40" />
+                    </MudItem>
+                    <MudItem xs="11">
+                        <MudText Align="Align.Center" Typo="Typo.h4"> @_localizer["UserLogin"]</MudText>
+                    </MudItem>
                 <MudItem xs="12">
-                        <MudImage Src="images/logo-ziraat.png" />
-                </MudItem>
-                <MudItem xs="12">
-                    <div class="d-flex justify-center">
-                        <MudText Typo="Typo.h4">Login Page</MudText>
-                    </div>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudTextField T="string" Label="User Name" Variant="Variant.Outlined"
+                    <MudTextField T="string" Label="@_localizer["UserName"]" Variant="Variant.Outlined"
                                   @bind-Value="user.UserName" />
                 </MudItem>
                 <MudItem xs="12">
-                    <MudTextField Label="Password" Variant="Variant.Outlined"
+                    <MudTextField Label="@_localizer["Password"]" Variant="Variant.Outlined"
                                   @bind-Value="user.Password" InputType="InputType.Password" />
                 </MudItem>
                 <MudItem xs="12" Class="d-flex justify-center">
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" Style="width: 100%;">Sign In</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" Style="width: 100%;">@_localizer["SignIn"]</MudButton>
                 </MudItem>
             </MudGrid>
         </EditForm>

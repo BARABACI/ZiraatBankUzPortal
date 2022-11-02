@@ -1,0 +1,20 @@
+﻿@page "/languageselector"
+@using System.Globalization
+@using ZiraatBankUzPortal.Shared.Constants
+@inject Microsoft.Extensions.Localization.IStringLocalizer<LanguageSelector> _localizer
+
+<MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
+    @foreach (var language in LocalizationConstants.SupportedLanguages)
+    {
+        <MudMenuItem OnClick="(()=> ChangeLanguageAsync(language.Code))">@_localizer[language.DisplayName]</MudMenuItem>
+    }
+</MudMenu>
+
+@code
+{
+    private async Task ChangeLanguageAsync(string languageCode)
+    {
+        _localStorage.SetItemAsync<string>("culture", languageCode);
+        _navigationManager.NavigateTo(_navigationManager.Uri, forceLoad: true);
+    }
+}
