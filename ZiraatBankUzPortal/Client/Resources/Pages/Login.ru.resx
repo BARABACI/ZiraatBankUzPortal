@@ -123,7 +123,7 @@
   <data name="SignIn" xml:space="preserve">
     <value>Войти</value>
   </data>
-  <data name="UserLogin" xml:space="preserve">
+  <data name="UserLoginFormText" xml:space="preserve">
     <value>Логин пользователя</value>
   </data>
   <data name="UserName" xml:space="preserve">

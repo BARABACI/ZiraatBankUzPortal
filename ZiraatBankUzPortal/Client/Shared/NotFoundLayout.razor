@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+@inject IStringLocalizer<NotFoundLayout> _localizer
+<MudThemeProvider />
+<MudSnackbarProvider />
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
+    <MudPaper Elevation="25" Class="pa-9" Style="width: 450px;">
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h1" Class="mt-6 red-text text-accent-4" Align="Align.Center">404</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h5" Class="mt-6" Align="Align.Center">@_localizer["404Text"]</MudText>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-center">
+                <MudButton Variant="Variant.Filled" Style="@($"background:{Colors.Red.Accent4};")" tex Size="Size.Large" Link="/login" Class="align-content-center text-white">@_localizer["GoHome"]</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>

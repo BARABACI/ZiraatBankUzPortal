@@ -1,5 +1,4 @@
 ﻿@page "/languageselector"
-@using System.Globalization
 @using ZiraatBankUzPortal.Shared.Constants
 @inject Microsoft.Extensions.Localization.IStringLocalizer<LanguageSelector> _localizer
 
@@ -14,7 +13,7 @@
 {
     private async Task ChangeLanguageAsync(string languageCode)
     {
-        _localStorage.SetItemAsync<string>("culture", languageCode);
+        await _localStorage.SetItemAsync<string>("culture", languageCode);
         _navigationManager.NavigateTo(_navigationManager.Uri, forceLoad: true);
     }
 }

@@ -1,27 +1,33 @@
 ﻿@inherits LayoutComponentBase
-
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
-<MudLayout>
-    <MudAppBar Elevation="1" Style="@($"background:{Colors.Red.Accent4};")">     
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <LoginLogoutButton />
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
-        <MudDrawerHeader>
-            <MudImage Fluid="true" Src="images/logo-ziraat.png" Alt="Ziraat Bank Logo" Class="rounded-lg" />
-        </MudDrawerHeader>
-        <NavMenu></NavMenu>
-    </MudDrawer>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1" Style="@($"background:{Colors.Red.Accent4};")">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <MudSpacer />
+                <LoginLogoutButton />
+                <LanguageSelector />
+            </MudAppBar>
+            <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+                <MudDrawerHeader>
+                    <MudImage Fluid="true" Src="images/logo-ziraat.png" Alt="Ziraat Bank Logo" Class="rounded-lg" />
+                </MudDrawerHeader>
+                <NavMenu></NavMenu>
+            </MudDrawer>
+            <MudMainContent>
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                    @Body
+                </MudContainer>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        <NotAuthorizedLayout/>
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     bool _drawerOpen = true;
     private bool _rightToLeft = false;
@@ -46,11 +52,7 @@
             userId = user.GetId();
             userName = user.GetName();
             userRole = user.GetRole();
-        }
-        else
-        {
-            _navigationManager.NavigateTo("/login");
-        }
+        }    
     }
 
 }

@@ -1,7 +1,29 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Dashboard</MudNavLink>
-    <MudNavGroup Title="Users" Icon="@Icons.Filled.SupervisedUserCircle">
-        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ListAlt"> Users List</MudNavLink>
-        <MudNavLink Href="/createuser" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AddCircle"> Create User</MudNavLink>
-    </MudNavGroup>
+    @if (@userRole == "Admin")
+    {
+        <MudNavGroup Title="Users" Icon="@Icons.Filled.SupervisedUserCircle">
+            <MudNavLink Href="/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ListAlt"> Users List</MudNavLink>
+            <MudNavLink Href="/createuser" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AddCircle"> Create User</MudNavLink>
+        </MudNavGroup>
+    }
 </MudNavMenu>
+
+@code {
+    string userRole;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMenuDataAsync();
+    }
+
+    private async Task LoadMenuDataAsync()
+    {
+        var state = await _authStateProvider.GetAuthenticationStateAsync();
+        var user = new ClaimsPrincipal(state.User.Identity);
+        if (user.Identity.IsAuthenticated)
+        {
+            userRole = user.GetRole();
+        }
+    }
+}

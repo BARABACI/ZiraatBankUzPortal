@@ -8,11 +8,17 @@
         <EditForm Model="@user" OnValidSubmit="HandleLogin">
             <MudGrid>
                 <DataAnnotationsValidator />
+                @if (@loginAlertMessageVisible)
+                {
+                    <MudItem xs="12" Class="align-content-center">
+                        <MudAlert Severity="Severity.Error">@loginAlertMessage</MudAlert>
+                </MudItem>
+                }
                 <MudItem xs="1" Class="align-content-center">
                         <MudImage Src="images/only-logo-ziraat.png" Height="40" />
                     </MudItem>
                     <MudItem xs="11">
-                        <MudText Align="Align.Center" Typo="Typo.h4"> @_localizer["UserLogin"]</MudText>
+                    <MudText Align="Align.Center" Typo="Typo.h4"> @_localizer["UserLoginFormText"]</MudText>
                     </MudItem>
                 <MudItem xs="12">
                     <MudTextField T="string" Label="@_localizer["UserName"]" Variant="Variant.Outlined"
@@ -31,6 +37,9 @@
 </MudContainer>
 
 @code {
+    public string loginAlertMessage;
+    public Boolean loginAlertMessageVisible;
+
     DisplayLoginUserModel user = new DisplayLoginUserModel();
     protected override async Task OnInitializedAsync()
     {
