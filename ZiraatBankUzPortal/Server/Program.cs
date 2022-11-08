@@ -11,8 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IUserDataRepository, UserDataRepository>();
 builder.Services.AddSingleton<IOracleDataAccess, OracleDataAccess>();
+builder.Services.AddSingleton<IUserDataRepository, UserDataRepository>();
+builder.Services.AddSingleton<IMenuDataRepository, MenuDataRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

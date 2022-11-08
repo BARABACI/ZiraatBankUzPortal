@@ -1,16 +1,51 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Dashboard</MudNavLink>
-    @if (@userRole == "Admin")
+﻿@inject HttpClient Http
+<MudNavMenu>
+    @if (menuList == null)
     {
-        <MudNavGroup Title="Users" Icon="@Icons.Filled.SupervisedUserCircle">
-            <MudNavLink Href="/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ListAlt"> Users List</MudNavLink>
-            <MudNavLink Href="/createuser" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AddCircle"> Create User</MudNavLink>
-        </MudNavGroup>
+        <p><em>Loading...</em></p>
     }
-</MudNavMenu>
+    else
+    {
+        @foreach (var ml in menuList)
+        {
+            if (ml.ParentMenuId == 0)
+            {
+                if (ml.PageLink != null)
+                {
+                    @if (ml.PageRoles.Split(',').Contains(userRole))
+                    {
+                        @if (ml.PageLink != "/")
+                        {
+                            <MudNavLink Href="@('/'+ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@ml.MenuName</MudNavLink>
+                        }
+                        else{
+                            <MudNavLink Href="@(ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@ml.MenuName</MudNavLink>
+                        }
+                    }
+                }
+                else
+                {
+                    @if (ml.PageRoles.Split(',').Contains(userRole))
+                    {
+                        <MudNavGroup Title="@ml.MenuName" Icon="@ml.IconName">
+                            @foreach (var mlp in menuList)
+                            {
+                                @if (ml.MenuId == mlp.ParentMenuId)
+                                {
+                                    <MudNavLink Match="NavLinkMatch.Prefix" Href="@mlp.PageLink" Icon="@mlp.IconName">@mlp.MenuName</MudNavLink>
+                                }
+                            }
+                        </MudNavGroup>
+                    }
+                }
+            }
+        }
+        }
+    </MudNavMenu>
 
-@code {
+    @code {
     string userRole;
+    private IEnumerable<MenuModel>? menuList;
 
     protected override async Task OnInitializedAsync()
     {
@@ -24,6 +59,7 @@
         if (user.Identity.IsAuthenticated)
         {
             userRole = user.GetRole();
+            menuList = await Http.GetFromJsonAsync<IEnumerable<MenuModel>>("api/Menu/Getallmenu");
         }
     }
 }

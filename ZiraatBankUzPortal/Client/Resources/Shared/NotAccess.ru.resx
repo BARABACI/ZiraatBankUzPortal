@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NotAccessText" xml:space="preserve">
+  <data name="403Text" xml:space="preserve">
     <value>Извините, у вас нет разрешения на доступ к этой странице.</value>
   </data>
   <data name="GoHome" xml:space="preserve">

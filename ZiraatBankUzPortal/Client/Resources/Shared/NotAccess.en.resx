@@ -97,7 +97,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NotAccessText" xml:space="preserve">
+  <data name="403Text" xml:space="preserve">
     <value>Sorry, you do not have access to this page.</value>
   </data>
   <data name="GoHome" xml:space="preserve">
