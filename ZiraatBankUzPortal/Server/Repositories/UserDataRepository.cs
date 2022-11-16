@@ -5,6 +5,8 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
+using ZiraatBankUzPortal.Client.Pages;
 using ZiraatBankUzPortal.Shared.DataAccess;
 using ZiraatBankUzPortal.Shared.DisplayModel;
 using ZiraatBankUzPortal.Shared.Dto;
@@ -115,13 +117,14 @@ namespace ZiraatBankUzPortal.Server.Repositories
                 loginUser.Password = p.Password;
                 loginUser.UserId = p.UserId;
                 loginUser.RoleName = p.RoleName;
-                loginUser.AccessToken = GenerateAccessToken(p.UserId,p.UserName, p.RoleName);
-            }   
+                loginUser.AccessToken = GenerateAccessToken(p.UserId, p.UserName, p.RoleName);
+            }
             return loginUser;
 
         }
         private string GenerateAccessToken(string userId, string userName, string role)
         {
+            /*
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
@@ -131,7 +134,7 @@ namespace ZiraatBankUzPortal.Server.Repositories
             string seckey = _config["JWTSettings:SecretKey"];
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(seckey));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 claims: claims,
@@ -141,6 +144,29 @@ namespace ZiraatBankUzPortal.Server.Repositories
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+            */
+
+            var claims = new[] {
+                        new Claim(JwtRegisteredClaimNames.Sub, _config["JwtSettings:Subject"]),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, userId),
+                        new Claim(ClaimTypes.Name, userName),
+                        new Claim(ClaimTypes.Role, role)
+                    };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                _config["JwtSettings:Issuer"],
+                _config["JwtSettings:Audience"],
+                claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: signIn);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
+
         }
     }
 }

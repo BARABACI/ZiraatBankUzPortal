@@ -1,4 +1,5 @@
 ﻿@page "/users"
+@using System.Net.Http.Headers
 @inject IDialogService DialogService
 @inject NavigationManager navigationManager
 @inject HttpClient Http
@@ -94,7 +95,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user = await Http.GetFromJsonAsync<IEnumerable<DisplayUserModel>>("api/User/Getall");
+        using var client = new HttpClient();
+        string token = await _localStorage.GetItemAsStringAsync("token");
+        token = token.Substring(1, token.Length - 1).Substring(0, token.Length - 2);
+        var request = new HttpRequestMessage(HttpMethod.Get, Http.BaseAddress + "api/User/Getall");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var httpResponse = await client.SendAsync(request);
+        user = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<DisplayUserModel>>();
+
+        //user = await Http.GetFromJsonAsync<IEnumerable<DisplayUserModel>>("api/User/Getall");
         pageSetting = await Http.GetFromJsonAsync<MenuModel>("api/Menu/Getmenubypagelink/" + _navigationManager.ToBaseRelativePath(_navigationManager.Uri));
         pageRoles = pageSetting.PageRoles;
     }

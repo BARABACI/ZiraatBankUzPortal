@@ -5,11 +5,14 @@ using ZiraatBankUzPortal.Shared;
 using ZiraatBankUzPortal.Shared.DataAccess;
 using ZiraatBankUzPortal.Shared.Model;
 using ZiraatBankUzPortal.Shared.Dto;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ZiraatBankUzPortal.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize (Roles ="Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserDataRepository _userDataRepository;

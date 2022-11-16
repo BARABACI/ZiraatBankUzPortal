@@ -1,6 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Configuration;
+using System.Text;
+using ZiraatBankUzPortal.Server;
 using ZiraatBankUzPortal.Server.Repositories;
 using ZiraatBankUzPortal.Shared.DataAccess;
 
@@ -14,6 +22,38 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOracleDataAccess, OracleDataAccess>();
 builder.Services.AddSingleton<IUserDataRepository, UserDataRepository>();
 builder.Services.AddSingleton<IMenuDataRepository, MenuDataRepository>();
+
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+});
+builder.Services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+    };
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -33,7 +73,7 @@ else
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor API V1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ZiraatBankUz Mis API V1");
 });
 
 
@@ -45,6 +85,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

@@ -14,6 +14,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
 
+
+
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.AddAuthorizationCore();
