@@ -124,28 +124,6 @@ namespace ZiraatBankUzPortal.Server.Repositories
         }
         private string GenerateAccessToken(string userId, string userName, string role)
         {
-            /*
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-                new Claim(ClaimTypes.Name, userName),
-                new Claim(ClaimTypes.Role, role),
-            };
-            string seckey = _config["JWTSettings:SecretKey"];
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(seckey));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds);
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-            */
-
             var claims = new[] {
                         new Claim(JwtRegisteredClaimNames.Sub, _config["JwtSettings:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -167,6 +145,32 @@ namespace ZiraatBankUzPortal.Server.Repositories
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
 
+        }
+        public async Task<IEnumerable<UserTitleDto>> GetUserTitleComboBoxData()
+        {
+            Utils.NLogMessage(this.GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            DataOracleParameters parameters = new DataOracleParameters();
+            parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
+            var data = await _orcaleDataAccess.LoadDataAsync<UserTitleDto, dynamic>("GEN_SEL_PERSONTITLES_SP", parameters.dynamicParameters, "OracleConnectionString");
+            return data;
+        }
+
+        public async Task<IEnumerable<UserPositionDto>> GetUserPositionComboBoxData()
+        {
+            Utils.NLogMessage(this.GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            DataOracleParameters parameters = new DataOracleParameters();
+            parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
+            var data = await _orcaleDataAccess.LoadDataAsync<UserPositionDto, dynamic>("GEN_SEL_PERSONPOSITIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            return data;
+        }
+
+        public async Task<IEnumerable<UserLocationDto>> GetUserLocationComboBoxData()
+        {
+            Utils.NLogMessage(this.GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            DataOracleParameters parameters = new DataOracleParameters();
+            parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
+            var data = await _orcaleDataAccess.LoadDataAsync<UserLocationDto, dynamic>("GEN_SEL_PERSONLOCATIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            return data;
         }
     }
 }

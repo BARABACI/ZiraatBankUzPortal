@@ -12,7 +12,6 @@ namespace ZiraatBankUzPortal.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize (Roles ="Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserDataRepository _userDataRepository;
@@ -29,7 +28,7 @@ namespace ZiraatBankUzPortal.Server.Controllers
             return Ok(user);
         }
 
-        [HttpGet("GetUser/{userId}")]
+        [HttpGet("GetUserById/{userId}")]
         public async Task<ActionResult<UserModel>> GetUserById(int userId)
         {
             var user = await _userDataRepository.GetUserByIdAsync(userId);
@@ -52,13 +51,32 @@ namespace ZiraatBankUzPortal.Server.Controllers
 
 
         [HttpPost("UpdateUser")]
-        public async Task<ActionResult> UpdateUser(UpdateUserDto userModel)
+        public async Task<ActionResult> UpdateUser([FromBody] UpdateUserDto userModel)
         {
             await _userDataRepository.UpdateUser(userModel);
             return Ok("User updated.");
         }
 
-      
+        [HttpGet("GetUserTitleComboBoxData")]
+        public async Task<ActionResult<UserTitleDto>> GetUserTitleComboBoxData()
+        {
+            var data = await _userDataRepository.GetUserTitleComboBoxData();
+            return Ok(data);
+        }
+
+        [HttpGet("GetUserPositionComboBoxData")]
+        public async Task<ActionResult<UserPositionDto>> GetUserPositionComboBoxData()
+        {
+            var data = await _userDataRepository.GetUserPositionComboBoxData();
+            return Ok(data);
+        }
+
+        [HttpGet("GetUserLocationComboBoxData")]
+        public async Task<ActionResult<UserLocationDto>> GetUserLocationComboBoxData()
+        {
+            var data = await _userDataRepository.GetUserLocationComboBoxData();
+            return Ok(data);
+        }
 
     }
 }

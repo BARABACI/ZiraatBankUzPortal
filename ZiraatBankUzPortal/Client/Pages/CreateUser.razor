@@ -1,167 +1,71 @@
 ﻿@page "/createuser"
-@attribute [Authorize(Roles = "Admin")]
 <br />
-<EditForm Model="@user" OnValidSubmit="@HandleValidSubmit">
-    <MudGrid>
-        <MudItem xs="12" sm="4" md="3">
-           <MudPaper Class="pa-8 ma-2" Elevation="3">
-                    <div class="d-flex justify-center mb-4">
-                        @if (!string.IsNullOrEmpty(@imageBase64))
-                        {
-                            <MudAvatar Image="@image" Style="height:250px; width:250px;"> </MudAvatar>
-                        }
-                        else
-                        {
-                            <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;"></MudAvatar>
-                        }
-                    </div>
-                <MudCardActions Class="d-flex justify-center">
-                    <InputFile id="fileInput" OnChange="UploadFiles" hidden />
-                    <MudButton HtmlTag="label"
-                               Variant="Variant.Text"
-                               Color="Color.Primary"
-                               Size="Size.Small"
-                               StartIcon="@Icons.Filled.CloudUpload"
-                               for="fileInput">
-                        Upload Image
-                    </MudButton>
-                </MudCardActions>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="8" md="9">
-           <MudPaper Class="pa-8 ma-2" Elevation="3">
-                    <MudGrid>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@user.Firstname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="First Name" Required="true" RequiredError="First name is required!"></MudTextField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@user.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudNumericField @bind-Value="@user.TitleId" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Title Id" Required="true" RequiredError="Title Id is required!"></MudNumericField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudNumericField @bind-Value="@user.PositionId" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Position Id" Required="true" RequiredError="Position Id  is required!"></MudNumericField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudNumericField @bind-Value="@user.LocationId" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Location Id" Required="true" RequiredError="Position Id is required!"></MudNumericField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@user.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@user.CellPhone" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Cell Phone" Required="true" RequiredError="Cell Phone is required!"></MudTextField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@user.RecordUser" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Record User" Required="true" RequiredError="Record User is required!"></MudTextField>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudDatePicker @bind-Date="@birthdate" DateFormat="dd/MM/yyyy" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" RequiredError="Date of birth is required!"></MudDatePicker>
-                        </MudItem>
-                        <MudItem xs="12" Class="d-flex justify-end flex-grow-1 gap-4">
-                            <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save Change</MudButton>
-                        </MudItem>
-                    </MudGrid>
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
-</EditForm>
-@code {
-    [Parameter]
-    public int userId { get; set; }
-
-    private UserModel user = new UserModel();
-    private CreateUserDto createUser = new CreateUserDto();
-    private UpdateUserDto updateUser = new UpdateUserDto();
-    public DateTime? birthdate { get; set; }
-    public string image;
-    public byte[] imageByte;
-    public EventCallback<byte[]> OnSelectedImage { get; set; }
-    public string? imageBase64 { get; set; }
-    private IBrowserFile? _file;
-
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (userId != 0)
-        {
-            await GetUserInformation();
-        }
-    }
-
-    public async Task HandleValidSubmit()
-    {
-
-        if (Convert.ToInt32(userId) != 0)
-        {
-            if (imageByte != null)
-            {
-                user.Picture = imageByte;
-                updateUser.Picture = user.Picture;
-            }
-            if (birthdate.HasValue)
-            {
-                user.DateofBirth = birthdate;
-                updateUser.DateofBirth = user.DateofBirth;
-            }
-            updateUser.Id = userId;
-            updateUser.Firstname = user.Firstname;
-            updateUser.Lastname = user.Lastname;
-            updateUser.TitleId = user.TitleId;
-            updateUser.PositionId = user.PositionId;
-            updateUser.LocationId = user.LocationId;
-            updateUser.IPT = user.IPT;
-            updateUser.CellPhone = user.CellPhone;
-            updateUser.RecordUser = user.RecordUser;
-            updateUser.Picture = user.Picture;
-
-            var response = await Http.PostAsJsonAsync<UpdateUserDto>("api/User/UpdateUser", updateUser);
-            await GetUserInformation();
-        }
-        else
-        {
-            if (birthdate.HasValue)
-            {
-                user.DateofBirth = birthdate;
-                createUser.DateofBirth = user.DateofBirth;
-            }
-            user.Picture = imageByte;
-            createUser.Firstname = user.Firstname;
-            createUser.Lastname = user.Lastname;
-            createUser.TitleId = user.TitleId;
-            createUser.PositionId = user.PositionId;
-            createUser.LocationId = user.LocationId;
-            createUser.IPT = user.IPT;
-            createUser.CellPhone = user.CellPhone;
-            createUser.RecordUser = user.RecordUser;
-            createUser.Picture = user.Picture;
-            var response = await Http.PostAsJsonAsync<CreateUserDto>("api/User/CreateUser", createUser);
-            //user = new UserModel();
-        }
-    }
-
-    async Task UploadFiles(InputFileChangeEventArgs e)
-    {
-        _file = e.File;
-        var extension = Path.GetExtension(_file.Name);
-        //var fileName = $"{UserId}-{Guid.NewGuid()}{extension}";
-        var format = "image/png";
-        var imageFile = await e.File.RequestImageFileAsync(format, 200, 200);
-        var buffer = new byte[imageFile.Size];
-        await imageFile.OpenReadStream().ReadAsync(buffer);
-        imageBase64 = Convert.ToBase64String(buffer);
-        image = string.Format("data:image/png;base64,{0}", imageBase64);
-        imageByte = buffer;
-        StateHasChanged();
-    }
-    public async Task GetUserInformation()
-    {
-        user = await Http.GetFromJsonAsync<UserModel>("api/User/GetUser/" + userId);
-        birthdate = user.DateofBirth;
-        if (user.Picture != null)
-        {
-            imageBase64 = Convert.ToBase64String(user.Picture);
-            image = string.Format("data:image/png;base64,{0}", imageBase64);
-        }
-    }
-}
+<AuthorizeView Roles="@_pageRoles">
+    <Authorized>
+        <EditForm Model="@user" OnValidSubmit="@HandleValidSubmit" Context="tableRowContext">
+            <MudGrid>
+                <MudItem xs="12" sm="4" md="3">
+                    <MudPaper Class="pa-8 ma-2" Elevation="3">
+                        <div class="d-flex justify-center mb-4">
+                            @if (!string.IsNullOrEmpty(@imageBase64))
+                            {
+                                <MudAvatar Image="@image" Style="height:250px; width:250px;"> </MudAvatar>
+                            }
+                            else
+                            {
+                                <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;"></MudAvatar>
+                            }
+                        </div>
+                        <MudCardActions Class="d-flex justify-center">
+                            <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+                            <MudButton HtmlTag="label"
+                                       Variant="Variant.Text"
+                                       Color="Color.Primary"
+                                       Size="Size.Small"
+                                       StartIcon="@Icons.Filled.CloudUpload"
+                                       for="fileInput">
+                                Upload Image
+                            </MudButton>
+                        </MudCardActions>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="8" md="9">
+                    <MudPaper Class="pa-8 ma-2" Elevation="3">
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@user.Firstname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="First Name" Required="true" RequiredError="First name is required!"></MudTextField>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@user.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudAutocomplete T="int" Label="Title Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.TitleId)" @bind-Value="user.TitleId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserTitleComboBoxData" ToStringFunc="@(i => userTitleNameList.FirstOrDefault(b => b.ID == i)?.TITLE ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudAutocomplete T="int" Label="Position Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.PositionId)" @bind-Value="user.PositionId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserPositionComboBoxData" ToStringFunc="@(i => userPositionNameList.FirstOrDefault(b => b.ID == i)?.POSITION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudAutocomplete T="int" Label="Location Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.LocationId)" @bind-Value="user.LocationId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserLocationComboBoxData" ToStringFunc="@(i => userLocationNameList.FirstOrDefault(b => b.ID == i)?.LOCATION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@user.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@user.CellPhone" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Cell Phone" Required="true" RequiredError="Cell Phone is required!"></MudTextField>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudDatePicker @bind-Date="@birthdate" DateFormat="dd/MM/yyyy" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" RequiredError="Date of birth is required!"></MudDatePicker>
+                            </MudItem>
+                            <MudItem xs="12" Class="d-flex justify-end flex-grow-1 gap-4">
+                                <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save Change</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <NotAccess />
+    </NotAuthorized>
+</AuthorizeView>

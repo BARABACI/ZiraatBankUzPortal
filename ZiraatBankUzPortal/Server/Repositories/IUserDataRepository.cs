@@ -13,5 +13,8 @@ namespace ZiraatBankUzPortal.Server.Repositories
         Task<DisplayUserModel> GetUserByIdAsync(int UserId);
         Task UpdateUser(UpdateUserDto user);
         Task<DisplayLoginUserModel> GetLoginUserByIdAsync(string userName, string password);
+        Task<IEnumerable<UserTitleDto>> GetUserTitleComboBoxData();
+        Task<IEnumerable<UserPositionDto>> GetUserPositionComboBoxData();
+        Task<IEnumerable<UserLocationDto>> GetUserLocationComboBoxData();
     }
 }

@@ -1,8 +1,6 @@
 ﻿@page "/users"
 @using System.Net.Http.Headers
-@inject IDialogService DialogService
-@inject NavigationManager navigationManager
-@inject HttpClient Http
+
 <style>
     .mud-table-container {
         overflow: auto;
@@ -10,14 +8,13 @@
 </style>
 
 <br />
-<AuthorizeView Roles="@pageRoles">
+<AuthorizeView Roles="@_pageRoles">
     <Authorized>
         <MudTable Hover="true" Elevation="10" Items="user" Filter="new Func<DisplayUserModel, bool>(Search)" @bind-user="user" Striped="true" Dense="true" Bordered="true">
             <ToolBarContent>
                 <div class="justify-center mud-text-align-center">
                     @if (true)
                     {
-                        <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => CreateUserModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">Register New User</MudButton>
                         <MudButton DisableElevation Variant="Variant.Filled" OnClick="OnParametersSetAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
                         @if (_canExportUsers)
                         {
@@ -82,117 +79,4 @@
         <NotAccess />
     </NotAuthorized>
 </AuthorizeView>
-@code {
 
-    private IEnumerable<DisplayUserModel>? user;
-    private MenuModel? pageSetting;
-    public string pageRoles;
-    private string _searchString = "";
-    private bool _canCreateUsers;
-    private bool _canSearchUsers;
-    private bool _canExportUsers;
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        using var client = new HttpClient();
-        string token = await _localStorage.GetItemAsStringAsync("token");
-        token = token.Substring(1, token.Length - 1).Substring(0, token.Length - 2);
-        var request = new HttpRequestMessage(HttpMethod.Get, Http.BaseAddress + "api/User/Getall");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        var httpResponse = await client.SendAsync(request);
-        user = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<DisplayUserModel>>();
-
-        //user = await Http.GetFromJsonAsync<IEnumerable<DisplayUserModel>>("api/User/Getall");
-        pageSetting = await Http.GetFromJsonAsync<MenuModel>("api/Menu/Getmenubypagelink/" + _navigationManager.ToBaseRelativePath(_navigationManager.Uri));
-        pageRoles = pageSetting.PageRoles;
-    }
-
-
-    private bool Search(DisplayUserModel user)
-    {
-        if (string.IsNullOrWhiteSpace(_searchString)) return true;
-        if (user.Firstname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            return true;
-        }
-        if (user.Lastname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            return true;
-        }
-        if (user.Title?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            return true;
-        }
-        if (user.Position?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            return true;
-        }
-        if (user.IPT?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private async Task CreateUserModal()
-    {
-        var parameters = new DialogParameters();
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true };
-        var dialog = DialogService.Show<CreateUser>("Register New User", parameters, options);
-        var result = await dialog.Result;
-        if (!result.Cancelled)
-        {
-            await OnParametersSetAsync();
-        }
-    }
-
-    private async Task EditUserModal(int UserId)
-    {
-        var parameters = new DialogParameters
-            {
-                {nameof(CreateUser.userId),UserId}
-            };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true };
-        var dialog = DialogService.Show<CreateUser>("Edit User", parameters, options);
-        var result = await dialog.Result;
-        if (!result.Cancelled)
-        {
-            await OnParametersSetAsync();
-        }
-    }
-
-    private async Task DeleteUserModal(int UserId)
-    {
-        var parameters = new DialogParameters
-            {
-                {nameof(DeleteDialog.ContentText), string.Format("Do you want delete the user with Id "+UserId)}
-            };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
-        var dialog = DialogService.Show<DeleteDialog>("Delete User", parameters, options);
-        var result = await dialog.Result;
-        if (!result.Cancelled)
-        {
-            var response = await Http.DeleteAsync("api/User/DeleteUser/" + UserId);
-            await OnParametersSetAsync();
-        }
-    }
-
-
-
-    /*
-    private async Task ExportToExcel()
-    {
-    var base64 = await _userManager.ExportToExcelAsync(_searchString);
-    await _jsRuntime.InvokeVoidAsync("Download", new
-        {
-        ByteArray = base64,
-        FileName = $"{nameof(Users).ToLower()}_{DateTime.Now:ddMMyyyyHHmmss}.xlsx",
-        MimeType = ApplicationConstants.MimeTypes.OpenXml
-    });
-    _snackBar.Add(string.IsNullOrWhiteSpace(_searchString)
-        ? _localizer["Users exported"]
-        : _localizer["Filtered Users exported"], Severity.Success);
-    }
-    */
-}
