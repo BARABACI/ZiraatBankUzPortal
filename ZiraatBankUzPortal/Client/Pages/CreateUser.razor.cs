@@ -1,8 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Web.Helpers;
 using ZiraatBankUzPortal.Shared.Dto;
 using ZiraatBankUzPortal.Shared.Model;
 
@@ -24,9 +29,10 @@ namespace ZiraatBankUzPortal.Client.Pages
         public byte[] imageByte;
         public EventCallback<byte[]> OnSelectedImage { get; set; }
         public string? imageBase64 { get; set; }
-        private IBrowserFile? _file;
         int authId;
-        string authName,authRole;
+        private string _firstLetterOfName;
+        string authName, authRole;
+        WebImage webimage;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -44,7 +50,13 @@ namespace ZiraatBankUzPortal.Client.Pages
         {
             if (Convert.ToInt32(userId) != 0)
             {
-                if (imageByte != null)
+                if (imageByte == null)
+                {
+                    await SetDefaultImage();
+                    user.Picture = imageByte;
+                    updateUser.Picture = user.Picture;
+                }
+                else
                 {
                     user.Picture = imageByte;
                     updateUser.Picture = user.Picture;
@@ -65,7 +77,6 @@ namespace ZiraatBankUzPortal.Client.Pages
                 updateUser.IPT = user.IPT;
                 updateUser.CellPhone = user.CellPhone;
                 updateUser.RecordUser = authId.ToString();
-                updateUser.Picture = user.Picture;
 
                 _httpResponse = await _userService.UpdateUser(updateUser);
                 if (_httpResponse.IsSuccessStatusCode)
@@ -85,8 +96,18 @@ namespace ZiraatBankUzPortal.Client.Pages
                     user.DateofBirth = birthdate;
                     createUser.DateofBirth = user.DateofBirth;
                 }
+                if (imageByte == null)
+                {
+                    await SetDefaultImage();
+                    user.Picture = imageByte;
+                    createUser.Picture = user.Picture;
+                }
+                else
+                {
+                    user.Picture = imageByte;
+                    createUser.Picture = user.Picture;
+                }
 
-                user.Picture = imageByte;
                 createUser.Firstname = user.Firstname;
                 createUser.Lastname = user.Lastname;
                 createUser.TitleId = user.TitleId;
@@ -95,7 +116,6 @@ namespace ZiraatBankUzPortal.Client.Pages
                 createUser.IPT = user.IPT;
                 createUser.CellPhone = user.CellPhone;
                 createUser.RecordUser = authId.ToString();
-                createUser.Picture = user.Picture;
                 _httpResponse = await _userService.CreateUser(createUser);
                 if (_httpResponse.IsSuccessStatusCode)
                 {
@@ -106,14 +126,12 @@ namespace ZiraatBankUzPortal.Client.Pages
                 {
                     _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "User not created.", Severity.Error);
                 }
-                
+
             }
         }
         async Task UploadFiles(InputFileChangeEventArgs e)
         {
-            _file = e.File;
-            var extension = Path.GetExtension(_file.Name);
-            //var fileName = $"{UserId}-{Guid.NewGuid()}{extension}";
+
             var format = "image/png";
             var imageFile = await e.File.RequestImageFileAsync(format, 200, 200);
             var buffer = new byte[imageFile.Size];
@@ -122,6 +140,13 @@ namespace ZiraatBankUzPortal.Client.Pages
             image = string.Format("data:image/png;base64,{0}", imageBase64);
             imageByte = buffer;
             StateHasChanged();
+        }
+        private async Task SetDefaultImage()
+        {
+            var imageStream = await _http.GetStreamAsync(_http.BaseAddress + "images/default_profile_image.png");
+            BinaryReader br = new BinaryReader(imageStream);
+            byte[] buffer = br.ReadBytes((int)imageStream.Length);
+            imageByte = buffer;
         }
         public async Task GetUserInformation()
         {
@@ -134,6 +159,13 @@ namespace ZiraatBankUzPortal.Client.Pages
                 {
                     imageBase64 = Convert.ToBase64String(user.Picture);
                     image = string.Format("data:image/png;base64,{0}", imageBase64);
+                }
+                else
+                {
+                    if (user.Firstname.Length > 0)
+                    {
+                        _firstLetterOfName = user.Firstname[0].ToString() + user.Lastname[0].ToString();
+                    }
                 }
             }
             else

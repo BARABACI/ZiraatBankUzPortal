@@ -13,7 +13,7 @@
                             }
                             else
                             {
-                                <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;"></MudAvatar>
+                                <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@_firstLetterOfName</MudAvatar>
                             }
                         </div>
                         <MudCardActions Class="d-flex justify-center">
@@ -57,7 +57,7 @@
                                 <MudDatePicker @bind-Date="@birthdate" DateFormat="dd/MM/yyyy" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" RequiredError="Date of birth is required!"></MudDatePicker>
                             </MudItem>
                             <MudItem xs="12" Class="d-flex justify-end flex-grow-1 gap-4">
-                                <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save Change</MudButton>
+                                <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save</MudButton>
                             </MudItem>
                         </MudGrid>
                     </MudPaper>
