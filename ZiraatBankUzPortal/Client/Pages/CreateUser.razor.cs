@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Web.Helpers;
 using ZiraatBankUzPortal.Shared.Dto;
 using ZiraatBankUzPortal.Shared.Model;
 
@@ -32,8 +31,6 @@ namespace ZiraatBankUzPortal.Client.Pages
         int authId;
         private string _firstLetterOfName;
         string authName, authRole;
-        WebImage webimage;
-
         protected override async Task OnParametersSetAsync()
         {
             authId = await _userService.GetAuthId();
