@@ -6,7 +6,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using ZiraatBankUzPortal.Client.Pages;
 using ZiraatBankUzPortal.Shared.DataAccess;
 using ZiraatBankUzPortal.Shared.DisplayModel;
 using ZiraatBankUzPortal.Shared.Dto;

@@ -22,8 +22,6 @@ builder.Services.AddScoped<HttpResponseMessage>();
 builder.Services.AddScoped<MenuModel>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPageRoleService, PageRoleService>();
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
