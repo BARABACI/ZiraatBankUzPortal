@@ -20,8 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\ZiraatBankUzPortal.Client.csproj" />
-    <ProjectReference Include="..\Core\ZiraatBankUzPortal.Core.csproj" />
     <ProjectReference Include="..\Shared\ZiraatBankUzPortal.Shared.csproj" />
   </ItemGroup>
 

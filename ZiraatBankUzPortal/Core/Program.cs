@@ -8,9 +8,8 @@ using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Configuration;
 using System.Text;
+using ZiraatBankUzPortal.Core;
 using ZiraatBankUzPortal.Core.Services;
-using ZiraatBankUzPortal.Server;
-using ZiraatBankUzPortal.Server.Repositories;
 using ZiraatBankUzPortal.Shared.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,43 +20,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOracleDataAccess, OracleDataAccess>();
-builder.Services.AddSingleton<IUserDataRepository, UserDataRepository>();
-builder.Services.AddSingleton<IMenuDataRepository, MenuDataRepository>();
 builder.Services.AddSingleton<IUserDataService, UserDataService>();
 builder.Services.AddSingleton<IMenuDataService, MenuDataService>();
 
-
-builder.Services.AddApiVersioning(options =>
-{
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.ReportApiVersions = true;
-});
-builder.Services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
-        ValidAudience = builder.Configuration["JwtSettings:Audience"],
-        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
-    };
-});
-
-builder.Services.AddControllers();
 
 var app = builder.Build();
 
