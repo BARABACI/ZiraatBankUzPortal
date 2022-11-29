@@ -15,47 +15,47 @@ using ZiraatBankUzPortal.Core.Services;
 
 namespace ZiraatBankUzPortal.Server.Repositories
 {
-    public class UserDataRepository : IUserDataRepository
+    public class EmployeeDataRepository : IEmployeeDataRepository
     {
         private readonly IConfiguration _config;
-        private readonly IUserDataService _userDataService;
-        public UserDataRepository(IConfiguration config, IUserDataService userDataService)
+        private readonly IEmployeeDataService _userDataService;
+        public EmployeeDataRepository(IConfiguration config, IEmployeeDataService userDataService)
         {
             _config = config;
             _userDataService = userDataService;
         }
 
-        public async Task CreateUser(CreateUserDto user)
+        public async Task CreateEmployee(EmployeeCreateDto employeeModel)
         {
-            await _userDataService.CreateUser(user);
+            await _userDataService.CreateEmployee(employeeModel);
         }
 
-        public async Task<IEnumerable<DisplayUserModel>> GetAllUserAsync()
+        public async Task<IEnumerable<EmployeeDisplayModel>> GetAllEmployeeAsync()
         {
-            var user = await _userDataService.GetAllUserAsync();
+            var user = await _userDataService.GetAllEmployeeAsync();
             return user;
         }
 
 
-        public async Task<DisplayUserModel> GetUserByIdAsync(int UserId)
+        public async Task<EmployeeDisplayModel> GetEmployeeByIdAsync(int employeId)
         {
-            var user = await _userDataService.GetUserByIdAsync(UserId);
+            var user = await _userDataService.GetEmployeeByIdAsync(employeId);
             return user;
         }
 
-        public async Task UpdateUser(UpdateUserDto user)
+        public async Task UpdateEmployee(EmployeeUpdateDto employeeModel)
         {
-            await _userDataService.UpdateUser(user);
+            await _userDataService.UpdateEmployee(employeeModel);
         }
 
-        public async Task DeleteUser(int UserId)
+        public async Task DeleteEmployee(int employeeId)
         {
-           await _userDataService.DeleteUser(UserId);
+            await _userDataService.DeleteEmployee(employeeId);
         }
 
-        public async Task<DisplayLoginUserModel> GetLoginUserByIdAsync(string userName, string password)
+        public async Task<LoginUserDisplayModel> GetLoginEmployeeByIdAsync(string userName, string password)
         {
-            var user = await _userDataService.GetLoginUserByIdAsync(userName,password);
+            var user = await _userDataService.GetLoginEmployeeByIdAsync(userName, password);
             return user;
 
         }
@@ -83,21 +83,21 @@ namespace ZiraatBankUzPortal.Server.Repositories
             return jwt;
 
         }
-        public async Task<IEnumerable<UserTitleDto>> GetUserTitleComboBoxData()
+        public async Task<IEnumerable<EmployeeTitleDto>> GetEmployeeTitleComboBoxData()
         {
-            var data = await _userDataService.GetUserTitleComboBoxData();
+            var data = await _userDataService.GetEmployeeTitleComboBoxData();
             return data;
         }
 
-        public async Task<IEnumerable<UserPositionDto>> GetUserPositionComboBoxData()
+        public async Task<IEnumerable<EmployeePositionDto>> GetEmployeePositionComboBoxData()
         {
-            var data = await _userDataService.GetUserPositionComboBoxData();
+            var data = await _userDataService.GetEmployeePositionComboBoxData();
             return data;
         }
 
-        public async Task<IEnumerable<UserLocationDto>> GetUserLocationComboBoxData()
+        public async Task<IEnumerable<EmployeeLocationDto>> GetEmployeeLocationComboBoxData()
         {
-            var data = await _userDataService.GetUserLocationComboBoxData();
+            var data = await _userDataService.GetEmployeeLocationComboBoxData();
             return data;
         }
     }

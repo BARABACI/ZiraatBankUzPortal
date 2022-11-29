@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZiraatBankUzPortal.Shared.Dto
 {
-    public class UserTitleDto
+    public class EmployeePositionDto
     {
         public int ID { get; set; }
-        public string TITLE { get; set; }
+        public string POSITION { get; set; }
     }
 }

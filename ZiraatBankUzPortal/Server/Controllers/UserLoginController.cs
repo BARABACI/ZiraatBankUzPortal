@@ -8,17 +8,17 @@ namespace ZiraatBankUzPortal.Server.Controllers
     [ApiController]
     public class UserLoginController : ControllerBase
     {
-        private readonly IUserDataRepository _userDataRepository;
+        private readonly IEmployeeDataRepository _userDataRepository;
 
-        public UserLoginController(IUserDataRepository userDataRepository)
+        public UserLoginController(IEmployeeDataRepository userDataRepository)
         {
             _userDataRepository = userDataRepository;
         }
 
         [HttpGet("{userName}/{userPassword}")]
-        public async Task<ActionResult<DisplayLoginUserModel>> GetUserLoginStatus(string userName, string userPassword)
+        public async Task<ActionResult<LoginUserDisplayModel>> GetUserLoginStatus(string userName, string userPassword)
         {
-            var user = await _userDataRepository.GetLoginUserByIdAsync(userName,userPassword);
+            var user = await _userDataRepository.GetLoginEmployeeByIdAsync(userName,userPassword);
             return Ok(user);
         }
     }

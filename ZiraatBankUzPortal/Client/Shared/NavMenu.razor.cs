@@ -21,7 +21,7 @@ namespace ZiraatBankUzPortal.Client.Shared
             if (user.Identity.IsAuthenticated)
             {
                 userRole = user.GetRole();
-                menuList = await Http.GetFromJsonAsync<IEnumerable<MenuModel>>("api/Menu/Getallmenu?api-version=1");
+                menuList = await Http.GetFromJsonAsync<IEnumerable<MenuModel>>("api/Menu/Getallmenu");
             }
         }
     }

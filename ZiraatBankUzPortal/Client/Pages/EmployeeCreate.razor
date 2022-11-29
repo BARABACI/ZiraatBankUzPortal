@@ -1,8 +1,8 @@
-﻿@page "/createuser"
+﻿@page "/employeecreate"
 <br />
 <AuthorizeView Roles="@_pageRoles">
     <Authorized>
-        <EditForm Model="@user" OnValidSubmit="@HandleValidSubmit" Context="tableRowContext">
+        <EditForm Model="@employee" OnValidSubmit="@HandleValidSubmit" Context="tableRowContext">
             <MudGrid>
                 <MudItem xs="12" sm="4" md="3">
                     <MudPaper Class="pa-8 ma-2" Elevation="3">
@@ -33,25 +33,25 @@
                     <MudPaper Class="pa-8 ma-2" Elevation="3">
                         <MudGrid>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@user.Firstname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="First Name" Required="true" RequiredError="First name is required!"></MudTextField>
+                                <MudTextField @bind-Value="@employee.Firstname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="First Name" Required="true" RequiredError="First name is required!"></MudTextField>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@user.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
+                                <MudTextField @bind-Value="@employee.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Title Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.TitleId)" @bind-Value="user.TitleId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserTitleComboBoxData" ToStringFunc="@(i => userTitleNameList.FirstOrDefault(b => b.ID == i)?.TITLE ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <MudAutocomplete T="int" Label="Title Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.TitleId)" @bind-Value="employee.TitleId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeeTitleComboBoxData" ToStringFunc="@(i => employeeTitleNameList.FirstOrDefault(b => b.ID == i)?.TITLE ?? string.Empty)" OffsetY="true"></MudAutocomplete>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Position Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.PositionId)" @bind-Value="user.PositionId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserPositionComboBoxData" ToStringFunc="@(i => userPositionNameList.FirstOrDefault(b => b.ID == i)?.POSITION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <MudAutocomplete T="int" Label="Position Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.PositionId)" @bind-Value="employee.PositionId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeePositionComboBoxData" ToStringFunc="@(i => employeePositionNameList.FirstOrDefault(b => b.ID == i)?.POSITION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Location Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => user.LocationId)" @bind-Value="user.LocationId" ResetValueOnEmptyText="true" SearchFunc="@SearchUserLocationComboBoxData" ToStringFunc="@(i => userLocationNameList.FirstOrDefault(b => b.ID == i)?.LOCATION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <MudAutocomplete T="int" Label="Location Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.LocationId)" @bind-Value="employee.LocationId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeeLocationComboBoxData" ToStringFunc="@(i => employeeLocationNameList.FirstOrDefault(b => b.ID == i)?.LOCATION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@user.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>
+                                <MudTextField @bind-Value="@employee.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@user.CellPhone" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Cell Phone" Required="true" RequiredError="Cell Phone is required!"></MudTextField>
+                                <MudTextField @bind-Value="@employee.CellPhone" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Cell Phone" Required="true" RequiredError="Cell Phone is required!"></MudTextField>
                             </MudItem>
                             <MudItem xs="12" md="6">
                                 <MudDatePicker @bind-Date="@birthdate" DateFormat="dd/MM/yyyy" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" RequiredError="Date of birth is required!"></MudDatePicker>

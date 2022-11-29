@@ -5,57 +5,57 @@ using ZiraatBankUzPortal.Shared.Model;
 
 namespace ZiraatBankUzPortal.Client.Pages
 {
-    public partial class Users
+    public partial class EmployeeList
     {
-        private IEnumerable<DisplayUserModel>? user;
+        private IEnumerable<EmployeeDisplayModel>? employee;
         public string _pageRoles;
         private string _searchString = "";
         private bool _canExportUsers;
         protected override async Task OnInitializedAsync()
         {
             await GetPageRole();
-            await GetAllUser();
+            await GetAllEmployee();
         }
-        private bool Search(DisplayUserModel user)
+        private bool Search(EmployeeDisplayModel employee)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (user.Firstname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (employee.Firstname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
 
-            if (user.Lastname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (employee.Lastname?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
 
-            if (user.Title?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (employee.Title?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
 
-            if (user.Position?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (employee.Position?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
 
-            if (user.IPT?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (employee.IPT?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
 
             return false;
         }
-        private async Task EditUserModal(int UserId)
+        private async Task EditEmployeeModal(int employeId)
         {
-            var parameters = new DialogParameters { { nameof(CreateUser.userId), UserId } };
+            var parameters = new DialogParameters { { nameof(EmployeeCreate.employeeId), employeId } };
             var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true };
-            var dialog = _dialogService.Show<CreateUser>("Edit User", parameters, options);
+            var dialog = _dialogService.Show<EmployeeCreate>("Edit Employee", parameters, options);
             var result = await dialog.Result;
             if (result.Cancelled)
             {
-                await GetAllUser();
+                await GetAllEmployee();
             }
         }    
         private async Task GetPageRole()
@@ -71,35 +71,35 @@ namespace ZiraatBankUzPortal.Client.Pages
                 _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Page roles not loaded.", Severity.Error);
             }
         }
-        private async Task GetAllUser()
+        private async Task GetAllEmployee()
         {
-            _httpResponse = await _userService.GetAllUser();
+            _httpResponse = await _employeeService.GetAllEmployee();
             if (_httpResponse.IsSuccessStatusCode)
             {
-                user = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<DisplayUserModel>>();
+                employee = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<EmployeeDisplayModel>>();
             }
             else
             {
-                _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Users not loaded.", Severity.Error);
+                _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Employee not loaded.", Severity.Error);
             }
         }
-        private async Task DeleteUserModal(int UserId)
+        private async Task DeleteEmployeeModal(int employeId)
         {
-            var parameters = new DialogParameters { { nameof(DeleteDialog.ContentText), string.Format("Do you want delete the user with Id " + UserId) } };
+            var parameters = new DialogParameters { { nameof(DeleteDialog.ContentText), string.Format("Do you want delete the employee with Id " + employeId) } };
             var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
-            var dialog = _dialogService.Show<DeleteDialog>("Delete User", parameters, options);
+            var dialog = _dialogService.Show<DeleteDialog>("Delete Employee", parameters, options);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                _httpResponse = await _userService.DeleteUser(UserId);
+                _httpResponse = await _employeeService.DeleteEmployee(employeId);
                 if (_httpResponse.IsSuccessStatusCode)
                 {
-                    _snackBar.Add("User deleted.", Severity.Success);
-                    await GetAllUser();
+                    _snackBar.Add("Employee deleted.", Severity.Success);
+                    await GetAllEmployee();
                 }
                 else
                 {
-                    _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "User not deleted.", Severity.Error);
+                    _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Employee not deleted.", Severity.Error);
                 }
             }
         }

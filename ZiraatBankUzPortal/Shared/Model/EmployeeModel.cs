@@ -1,6 +1,6 @@
 ﻿namespace ZiraatBankUzPortal.Shared.Model
 {
-    public class UserModel
+    public class EmployeeModel
     {
         public int Id { get; set; }
         public string Firstname { get; set; }

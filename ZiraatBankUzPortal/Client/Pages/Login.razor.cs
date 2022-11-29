@@ -8,7 +8,7 @@ namespace ZiraatBankUzPortal.Client.Pages
     {
         public string loginAlertMessage;
         public Boolean loginAlertMessageVisible;
-        DisplayLoginUserModel user = new DisplayLoginUserModel();
+        LoginUserDisplayModel user = new LoginUserDisplayModel();
         protected override async Task OnInitializedAsync()
         {
             var state = await _authStateProvider.GetAuthenticationStateAsync();
@@ -20,7 +20,7 @@ namespace ZiraatBankUzPortal.Client.Pages
         }
         async Task HandleLogin()
         {
-            user = await Http.GetFromJsonAsync<DisplayLoginUserModel>("api/UserLogin/" + user.UserName + "/" + user.Password);
+            user = await Http.GetFromJsonAsync<LoginUserDisplayModel>("api/UserLogin/" + user.UserName + "/" + user.Password);
             if (user.UserName != "" && user.Password != "")
             {
                 var token = user.AccessToken;

@@ -1,4 +1,4 @@
-﻿@page "/users"
+﻿@page "/employeelist"
 @using System.Net.Http.Headers
 
 <style>
@@ -10,7 +10,7 @@
 <br />
 <AuthorizeView Roles="@_pageRoles">
     <Authorized>
-        <MudTable Hover="true" Elevation="10" Items="user" Filter="new Func<DisplayUserModel, bool>(Search)" @bind-user="user" Striped="true" Dense="true" Bordered="true">
+        <MudTable Hover="true" Elevation="10" Items="employee" Filter="new Func<EmployeeDisplayModel, bool>(Search)" @bind-user="employee" Striped="true" Dense="true" Bordered="true">
             <ToolBarContent>
                 <div class="justify-center mud-text-align-center">
                     @if (true)
@@ -37,11 +37,11 @@
                 }
             </ToolBarContent>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<DisplayUserModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
                 <MudTh Style="text-align:right">Actions</MudTh>
             </HeaderContent>
             <RowTemplate Context="tableRowContext">
@@ -62,8 +62,8 @@
                 </MudTd>
                 <MudTd DataLabel="Actions" Style="text-align:right">
                     <MudMenu Label="Actions" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
-                        <MudMenuItem OnClick="(() => EditUserModal(tableRowContext.Id))">View Profile</MudMenuItem>
-                        <MudMenuItem OnClick="(() => DeleteUserModal(tableRowContext.Id))">Delete Profile</MudMenuItem>
+                        <MudMenuItem OnClick="(() => EditEmployeeModal(tableRowContext.Id))">View Profile</MudMenuItem>
+                        <MudMenuItem OnClick="(() => DeleteEmployeeModal(tableRowContext.Id))">Delete Profile</MudMenuItem>
                     </MudMenu>
                 </MudTd>
             </RowTemplate>

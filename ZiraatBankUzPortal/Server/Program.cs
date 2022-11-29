@@ -21,9 +21,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOracleDataAccess, OracleDataAccess>();
-builder.Services.AddSingleton<IUserDataRepository, UserDataRepository>();
+builder.Services.AddSingleton<IEmployeeDataRepository, EmployeeDataRepository>();
 builder.Services.AddSingleton<IMenuDataRepository, MenuDataRepository>();
-builder.Services.AddSingleton<IUserDataService, UserDataService>();
+builder.Services.AddSingleton<IEmployeeDataService, EmployeeDataService>();
 builder.Services.AddSingleton<IMenuDataService, MenuDataService>();
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZiraatBankUzPortal.Shared.DisplayModel
 {
-    public class DisplayLoginUserModel
+    public class LoginUserDisplayModel
     {
         public string UserName { get; set; }
         public string Password { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZiraatBankUzPortal.Shared.Dto
 {
-    public class UserLocationDto
+    public class EmployeeLocationDto
     {
         public int ID { get; set; }
         public string LOCATION { get; set; }

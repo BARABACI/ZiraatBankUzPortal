@@ -20,7 +20,7 @@ builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddScoped<HttpResponseMessage>();
 builder.Services.AddScoped<MenuModel>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPageRoleService, PageRoleService>();
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");

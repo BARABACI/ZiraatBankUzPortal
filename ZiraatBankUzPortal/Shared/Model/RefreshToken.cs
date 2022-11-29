@@ -12,6 +12,6 @@ namespace ZiraatBankUzPortal.Shared.Model
         public int UserId { get; set; }
         public string Token { get; set; }
         public DateTime ExpiryDate { get; set; }
-        public virtual UserModel User { get; set; }
+        public virtual EmployeeModel User { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ZiraatBankUzPortal.Shared.DisplayModel
 {
-    public class DisplayUserModel
+    public class EmployeeDisplayModel
     {
         public string? CellPhone { get; set; }
         public string? Firstname { get; set; }
