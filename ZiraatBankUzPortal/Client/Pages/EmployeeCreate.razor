@@ -39,13 +39,13 @@
                                 <MudTextField @bind-Value="@employee.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Title Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.TitleId)" @bind-Value="employee.TitleId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeeTitleComboBoxData" ToStringFunc="@(i => employeeTitleNameList.FirstOrDefault(b => b.ID == i)?.TITLE ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <SearchingDropDownList T="int" _label="Tittle Name*" _data="tittleAutocomplateModel" @bind-TbText="employee.TitleId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Position Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.PositionId)" @bind-Value="employee.PositionId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeePositionComboBoxData" ToStringFunc="@(i => employeePositionNameList.FirstOrDefault(b => b.ID == i)?.POSITION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <SearchingDropDownList T="int" _label="Position Name*" _data="positionAutocomplateModel" @bind-TbText="employee.PositionId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudAutocomplete T="int" Label="Location Name*" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" For="@(() => employee.LocationId)" @bind-Value="employee.LocationId" ResetValueOnEmptyText="true" SearchFunc="@SearchEmployeeLocationComboBoxData" ToStringFunc="@(i => employeeLocationNameList.FirstOrDefault(b => b.ID == i)?.LOCATION ?? string.Empty)" OffsetY="true"></MudAutocomplete>
+                                <SearchingDropDownList T="int" _label="Location Name*" _data="locationAutocomplateModel" @bind-TbText="employee.LocationId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
                                 <MudTextField @bind-Value="@employee.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Components\BlazorComponents.Shared\BlazorComponents.Shared.csproj" />
     <ProjectReference Include="..\Shared\ZiraatBankUzPortal.Shared.csproj" />
   </ItemGroup>
 

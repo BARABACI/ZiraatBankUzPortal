@@ -27,7 +27,7 @@ namespace ZiraatBankUzPortal.Core.Services
 
         public async Task CreateEmployee(EmployeeCreateDto employeeModel)
         {
-            Utils.NLogMessage(GetType(), $"{"CreatePerson()"}", Utils.NLogType.Info);
+            Utils.NLogMessage(GetType(), $"{"CreateEmployee()"}", Utils.NLogType.Info);
             try
             {
                 DataOracleParameters parameters = new DataOracleParameters();
@@ -41,7 +41,7 @@ namespace ZiraatBankUzPortal.Core.Services
                 parameters.Add("p_RECORDUSER", OracleMappingType.Varchar2, ParameterDirection.Input, employeeModel.RecordUser);
                 parameters.Add("p_DATEOFBIRTH", OracleMappingType.Varchar2, ParameterDirection.Input, employeeModel.DateofBirth.HasValue ? employeeModel.DateofBirth.Value.ToString("yyyyMMdd") : "");
                 parameters.Add("p_PICTURE", OracleMappingType.Blob, ParameterDirection.Input, employeeModel.Picture);
-                await _orcaleDataAccess.SaveDataAsync("GEN_INS_PERSON_SP", parameters.dynamicParameters, "OracleConnectionString");
+                await _orcaleDataAccess.SaveDataAsync("GEN_INS_EMPLOYEE_SP", parameters.dynamicParameters, "OracleConnectionString");
             }
             catch (Exception e)
             {
@@ -54,7 +54,7 @@ namespace ZiraatBankUzPortal.Core.Services
             Utils.NLogMessage(GetType(), $"{"GetAllUserAsync()"}", Utils.NLogType.Info);
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
-            var user = await _orcaleDataAccess.LoadDataAsync<EmployeeDisplayModel, dynamic>("GEN_SEL_PERSONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            var user = await _orcaleDataAccess.LoadDataAsync<EmployeeDisplayModel, dynamic>("GEN_SEL_EMPLOYEES_SP", parameters.dynamicParameters, "OracleConnectionString");
             return user;
         }
 
@@ -64,13 +64,13 @@ namespace ZiraatBankUzPortal.Core.Services
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("p_Id", OracleMappingType.Int32, ParameterDirection.Input, UserId);
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
-            var user = await _orcaleDataAccess.LoadDataAsync<EmployeeDisplayModel, dynamic>("GEN_SEL_PERSONSID_SP", parameters.dynamicParameters, "OracleConnectionString");
+            var user = await _orcaleDataAccess.LoadDataAsync<EmployeeDisplayModel, dynamic>("GEN_SEL_EMPLOYEEID_SP", parameters.dynamicParameters, "OracleConnectionString");
             return user.FirstOrDefault();
         }
 
         public async Task UpdateEmployee(EmployeeUpdateDto employeeModel)
         {
-            Utils.NLogMessage(GetType(), $"{"UpdateUser()"}", Utils.NLogType.Info);
+            Utils.NLogMessage(GetType(), $"{"UpdateEmployee()"}", Utils.NLogType.Info);
             try
             {
                 DataOracleParameters parameters = new DataOracleParameters();
@@ -85,7 +85,7 @@ namespace ZiraatBankUzPortal.Core.Services
                 parameters.Add("p_RECORDUSER", OracleMappingType.Varchar2, ParameterDirection.Input, employeeModel.RecordUser);
                 parameters.Add("p_DATEOFBIRTH", OracleMappingType.Varchar2, ParameterDirection.Input, employeeModel.DateofBirth.HasValue ? employeeModel.DateofBirth.Value.ToString("yyyyMMdd") : "");
                 parameters.Add("p_PICTURE", OracleMappingType.Blob, ParameterDirection.Input, employeeModel.Picture);
-                await _orcaleDataAccess.SaveDataAsync("GEN_UPD_PERSON_SP", parameters.dynamicParameters, "OracleConnectionString");
+                await _orcaleDataAccess.SaveDataAsync("GEN_UPD_EMPLOYEE_SP", parameters.dynamicParameters, "OracleConnectionString");
             }
             catch (Exception e)
             {
@@ -98,7 +98,7 @@ namespace ZiraatBankUzPortal.Core.Services
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("p_ID", OracleMappingType.Int32, ParameterDirection.Input, employeeId);
             parameters.Add("p_RECORDUSER", OracleMappingType.Varchar2, ParameterDirection.Input, "1");
-            await _orcaleDataAccess.SaveDataAsync("GEN_DEL_PERSON_SP", parameters.dynamicParameters, "OracleConnectionString");
+            await _orcaleDataAccess.SaveDataAsync("GEN_DEL_EMPLOYEE_SP", parameters.dynamicParameters, "OracleConnectionString");
         }
 
         public async Task<LoginUserDisplayModel> GetLoginEmployeeByIdAsync(string userName, string password)
@@ -147,28 +147,28 @@ namespace ZiraatBankUzPortal.Core.Services
         }
         public async Task<IEnumerable<EmployeeTitleDto>> GetEmployeeTitleComboBoxData()
         {
-            Utils.NLogMessage(GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            Utils.NLogMessage(GetType(), $"{"GetEmployeeTitleComboBoxData()"}", Utils.NLogType.Info);
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
-            var data = await _orcaleDataAccess.LoadDataAsync<EmployeeTitleDto, dynamic>("GEN_SEL_PERSONTITLES_SP", parameters.dynamicParameters, "OracleConnectionString");
+            var data = await _orcaleDataAccess.LoadDataAsync<EmployeeTitleDto, dynamic>("GEN_SEL_EMPLOYEETITLES_SP", parameters.dynamicParameters, "OracleConnectionString");
             return data;
         }
 
         public async Task<IEnumerable<EmployeePositionDto>> GetEmployeePositionComboBoxData()
         {
-            Utils.NLogMessage(GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            Utils.NLogMessage(GetType(), $"{"GetEmployeeTitleComboBoxData()"}", Utils.NLogType.Info);
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
-            var data = await _orcaleDataAccess.LoadDataAsync<EmployeePositionDto, dynamic>("GEN_SEL_PERSONPOSITIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            var data = await _orcaleDataAccess.LoadDataAsync<EmployeePositionDto, dynamic>("GEN_SEL_EMPLOYEEPOSITIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
             return data;
         }
 
         public async Task<IEnumerable<EmployeeLocationDto>> GetEmployeeLocationComboBoxData()
         {
-            Utils.NLogMessage(GetType(), $"{"GetUserTitleComboBoxData()"}", Utils.NLogType.Info);
+            Utils.NLogMessage(GetType(), $"{"GetEmployeeTitleComboBoxData()"}", Utils.NLogType.Info);
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
-            var data = await _orcaleDataAccess.LoadDataAsync<EmployeeLocationDto, dynamic>("GEN_SEL_PERSONLOCATIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            var data = await _orcaleDataAccess.LoadDataAsync<EmployeeLocationDto, dynamic>("GEN_SEL_EMPLOYEELOCATIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
             return data;
         }
     }

@@ -1,3 +1,4 @@
+using BlazorComponents.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
@@ -20,6 +21,9 @@ namespace ZiraatBankUzPortal.Client.Pages
         private EmployeeModel employee = new EmployeeModel();
         private EmployeeCreateDto createEmployee = new EmployeeCreateDto();
         private EmployeeUpdateDto updateEmployee = new EmployeeUpdateDto();
+        private List<DropDownListModel> tittleAutocomplateModel = new List<DropDownListModel>();
+        private List<DropDownListModel> positionAutocomplateModel = new List<DropDownListModel>();
+        private List<DropDownListModel> locationAutocomplateModel = new List<DropDownListModel>();
         private IEnumerable<EmployeeTitleDto> employeeTitleNameList;
         private IEnumerable<EmployeePositionDto> employeePositionNameList;
         private IEnumerable<EmployeeLocationDto> employeeLocationNameList;
@@ -190,6 +194,10 @@ namespace ZiraatBankUzPortal.Client.Pages
             if (_httpResponse.IsSuccessStatusCode)
             {
                 employeeTitleNameList = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<EmployeeTitleDto>>();
+                foreach (var item in employeeTitleNameList)
+                {
+                    tittleAutocomplateModel.Add(new DropDownListModel() { Key = item.ID, Value = item.TITLE });
+                }
             }
             else
             {
@@ -212,6 +220,10 @@ namespace ZiraatBankUzPortal.Client.Pages
             if (_httpResponse.IsSuccessStatusCode)
             {
                 employeePositionNameList = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<EmployeePositionDto>>();
+                foreach (var item in employeePositionNameList)
+                {
+                    positionAutocomplateModel.Add(new DropDownListModel() { Key = item.ID, Value = item.POSITION });
+                }
             }
             else
             {
@@ -234,6 +246,10 @@ namespace ZiraatBankUzPortal.Client.Pages
             if (_httpResponse.IsSuccessStatusCode)
             {
                 employeeLocationNameList = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<EmployeeLocationDto>>();
+                foreach (var item in employeeLocationNameList)
+                {
+                    locationAutocomplateModel.Add(new DropDownListModel() { Key = item.ID, Value = item.LOCATION });
+                }
             }
             else
             {
