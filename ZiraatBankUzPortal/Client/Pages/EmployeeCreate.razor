@@ -32,32 +32,32 @@
                 <MudItem xs="12" sm="8" md="9">
                     <MudPaper Class="pa-8 ma-2" Elevation="3">
                         <MudGrid>
-                            <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@employee.Firstname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="First Name" Required="true" RequiredError="First name is required!"></MudTextField>
+                            <MudItem xs="12" md="6">                       
+                                <TextBox T="string" _label="First Name" _required="true" _requiredError="First name is required!" @bind-TbText="@employee.Firstname"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@employee.Lastname" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Last Name" Required="true" RequiredError="Last name is required!"></MudTextField>
+                                <TextBox T="string" _label="Last Name" _required="true" _requiredError="Last name is required!" @bind-TbText="@employee.Lastname"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Tittle Name*" _data="tittleAutocomplateModel" @bind-TbText="employee.TitleId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="Tittle Name*" _data="tittleAutocomplateModel" @bind-CurrentValue="employee.TitleId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Position Name*" _data="positionAutocomplateModel" @bind-TbText="employee.PositionId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="Position Name*" _data="positionAutocomplateModel" @bind-CurrentValue="employee.PositionId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Location Name*" _data="locationAutocomplateModel" @bind-TbText="employee.LocationId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="Location Name*" _data="locationAutocomplateModel" @bind-CurrentValue="employee.LocationId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@employee.IPT" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="IPT" Required="true" RequiredError="IPT is required!"></MudTextField>
+                                <TextBox T="string" _label="IPT No" _required="true" _requiredError="IPT no is required!" @bind-TbText="@employee.IPT"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudTextField @bind-Value="@employee.CellPhone" T="string" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Cell Phone" Required="true" RequiredError="Cell Phone is required!"></MudTextField>
+                                <TextBox T="string" _label="Cell Phone" _required="true" _requiredError="Cell phone is required!" @bind-TbText="@employee.CellPhone"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <MudDatePicker @bind-Date="@birthdate" DateFormat="dd/MM/yyyy" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" RequiredError="Date of birth is required!"></MudDatePicker>
+                                <DatePicker @bind-DpText="@birthdate" _required="true" _requiredError="Date of birth is required!" _label="Date Of Birth"></DatePicker>
                             </MudItem>
                             <MudItem xs="12" Class="d-flex justify-end flex-grow-1 gap-4">
-                                <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save</MudButton>
+                                <Button _color="Color.Success" _startIcon="@Icons.Material.Filled.Save" _buttonType="ButtonType.Submit" _label="Save"></Button>
                             </MudItem>
                         </MudGrid>
                     </MudPaper>

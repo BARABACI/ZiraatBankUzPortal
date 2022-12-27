@@ -1,0 +1,81 @@
+﻿@page "/employeephonebook"
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<br />
+<MudTable Hover="true" Elevation="10" Items="phonebook" Filter="new Func<EmployeePhoneBookDisplayModel, bool>(Search)" @bind-user="phonebook" Striped="true" Dense="true" Bordered="true">
+    <ToolBarContent>
+        <div class="justify-center mud-text-align-center">
+            @if (true)
+            {
+                <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
+                @if (_canExportPhoneBook)
+                {
+                    <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
+                }
+            }
+            else
+            {
+                <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
+                @if (true)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
+                }
+            }
+        </div>
+        <MudSpacer />
+        @if (true)
+        {
+            <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Employees" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        }
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh Style="text-align:right">Picture</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Location)">Location Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.CellPhone)">Cell Phone</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate Context="tableRowContext">
+        <MudTd>
+            <div class="d-flex justify-center mb-4">
+                <MudAvatar Image="@string.Format("data:image/png;base64,{0}", Convert.ToBase64String(tableRowContext.Picture))" Style="height:100; width:100;"> </MudAvatar>
+            </div>
+        </MudTd>
+        <MudTd DataLabel="FirstName">
+            <MudHighlighter Text="@tableRowContext.Firstname" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="LastName">
+            <MudHighlighter Text="@tableRowContext.Lastname" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="UserName">
+            <MudHighlighter Text="@tableRowContext.Title" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Email">
+            <MudHighlighter Text="@tableRowContext.Position" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Email">
+            <MudHighlighter Text="@tableRowContext.Location" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="PhoneNumber">
+            <MudHighlighter Text="@tableRowContext.IPT" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Email">
+            <MudHighlighter Text="@tableRowContext.CellPhone" HighlightedText="@_searchString" />
+        </MudTd>
+    </RowTemplate>
+    <FooterContent>
+
+    </FooterContent>
+    <PagerContent>
+        <MudTablePager></MudTablePager>
+    </PagerContent>
+</MudTable>
+
+

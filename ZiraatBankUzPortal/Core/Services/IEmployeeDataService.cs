@@ -5,8 +5,6 @@ namespace ZiraatBankUzPortal.Core.Services
 {
     public interface IEmployeeDataService
     {
-        string? imageBase64 { get; set; }
-
         Task CreateEmployee(EmployeeCreateDto employeeModel);
         Task DeleteEmployee(int employeeId);
         Task<IEnumerable<EmployeeDisplayModel>> GetAllEmployeeAsync();

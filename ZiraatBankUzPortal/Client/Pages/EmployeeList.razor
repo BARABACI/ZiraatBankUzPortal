@@ -15,7 +15,7 @@
                 <div class="justify-center mud-text-align-center">
                     @if (true)
                     {
-                        <MudButton DisableElevation Variant="Variant.Filled" OnClick="OnParametersSetAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                        <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
                         @if (_canExportUsers)
                         {
                             <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
@@ -23,7 +23,7 @@
                     }
                     else
                     {
-                        <MudButton DisableElevation Variant="Variant.Filled" OnClick="OnParametersSetAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                        <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
                         @if (true)
                         {
                             <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
@@ -33,7 +33,7 @@
                 <MudSpacer />
                 @if (true)
                 {
-                    <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Users" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+                    <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Employees" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
                 }
             </ToolBarContent>
             <HeaderContent>

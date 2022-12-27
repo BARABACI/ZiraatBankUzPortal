@@ -25,7 +25,10 @@ builder.Services.AddSingleton<IEmployeeDataRepository, EmployeeDataRepository>()
 builder.Services.AddSingleton<IMenuDataRepository, MenuDataRepository>();
 builder.Services.AddSingleton<IEmployeeDataService, EmployeeDataService>();
 builder.Services.AddSingleton<IMenuDataService, MenuDataService>();
-
+builder.Services.AddSingleton<IEmployeePhoneBookService, EmployeePhoneBookService>();
+builder.Services.AddSingleton<IEmployeePhoneBookRepository, EmployeePhoneBookRepository>();
+builder.Services.AddSingleton<IInternalExportExcelService, InternalExportExcelService>();
+builder.Services.AddSingleton<IInternalExportExcelRepository, InternalExportExcelRepository>();
 
 builder.Services.AddApiVersioning(options =>
 {

@@ -1,25 +1,25 @@
 ﻿@typeparam T
 @inherits MudAutocomplete<T>
 
-<MudAutocomplete T="int" Label="@label" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" ResetValueOnEmptyText="true" SearchFunc="@SearchComboBoxData" For="@(() => selectValue)" ToStringFunc="@(i => data.FirstOrDefault(b => b.Key == i)?.Value ?? string.Empty)" OffsetY="true" @bind-Value="TbText"></MudAutocomplete>
+<MudAutocomplete T="int" Label="@label" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" ResetValueOnEmptyText="true" SearchFunc="@SearchComboBoxData" For="@(() => selectValue)" ToStringFunc="@(i => data.FirstOrDefault(b => b.Key == i)?.Value ?? string.Empty)" OffsetY="true" @bind-Value="CurrentValue"></MudAutocomplete>
 
 @code{
     [Parameter] public string? _label{ get; set; }
     [Parameter] public List<DropDownListModel>? _data { get; set; }
     [Parameter]
-    public int TbText
+    public int CurrentValue
     {
         get => selectValue;
         set
         {
             if (selectValue == value) return;
             selectValue = value;
-            TbTextChanged.InvokeAsync(value);
+            CurrentValueChanged.InvokeAsync(value);
         }
     }
 
     [Parameter]
-    public EventCallback<int> TbTextChanged { get; set; }
+    public EventCallback<int> CurrentValueChanged { get; set; }
     private string? label;
 
     private List<DropDownListModel> data;
@@ -29,7 +29,7 @@
     {
         label = _label;
         data = _data;
-        selectValue = TbText;
+        selectValue = CurrentValue;
         base.OnParametersSet();
     }
 

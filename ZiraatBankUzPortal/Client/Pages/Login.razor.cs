@@ -1,6 +1,8 @@
+using MudBlazor;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using ZiraatBankUzPortal.Shared.DisplayModel;
+using ZiraatBankUzPortal.Shared.Model;
 
 namespace ZiraatBankUzPortal.Client.Pages
 {
@@ -20,6 +22,7 @@ namespace ZiraatBankUzPortal.Client.Pages
         }
         async Task HandleLogin()
         {
+
             user = await Http.GetFromJsonAsync<LoginUserDisplayModel>("api/UserLogin/" + user.UserName + "/" + user.Password);
             if (user.UserName != "" && user.Password != "")
             {
@@ -28,6 +31,24 @@ namespace ZiraatBankUzPortal.Client.Pages
                 await _authStateProvider.GetAuthenticationStateAsync();
                 _navigationManager.NavigateTo("/");
             }
+            /*
+            _httpResponse = await _loginService.Login(userName, password);
+            if (_httpResponse.IsSuccessStatusCode)
+            {
+                user = await _httpResponse.Content.ReadFromJsonAsync<LoginUserDisplayModel>();
+                var token = user.AccessToken;
+                await _localStorage.SetItemAsync("token", token);
+                await _authStateProvider.GetAuthenticationStateAsync();
+                _navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Page roles not loaded.", Severity.Error);
+            }*/
+        }
+        private async Task UserLogin(string userName, string password)
+        {
+
         }
     }
 }

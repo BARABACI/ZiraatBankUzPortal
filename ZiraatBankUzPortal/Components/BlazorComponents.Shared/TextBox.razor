@@ -1,0 +1,36 @@
+﻿@typeparam T
+@inherits MudTextField<T>
+
+<MudTextField @bind-Value="@TbText" Label="@label" Required="@required" RequiredError="@requiredError" Margin="Margin.Dense" T="string" Variant="Variant.Outlined"></MudTextField>
+@code{
+    [Parameter] public string? _label{ get; set; }
+    [Parameter] public bool _required { get; set; }
+    [Parameter] public string? _requiredError { get; set; }
+    [Parameter]
+    public string TbText
+    {
+        get => tbText;
+        set
+        {
+            if (tbText == value) return;
+            tbText = value;
+            TbTextChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> TbTextChanged { get; set; }
+    private string? label;
+    private string tbText;
+    private bool required;
+    public string? requiredError;
+
+    protected override void OnParametersSet()
+    {
+        label = _label;
+        tbText = TbText;
+        required = _required;
+        requiredError = _requiredError;
+        base.OnParametersSet();
+    }
+}

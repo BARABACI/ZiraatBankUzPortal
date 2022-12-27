@@ -8,10 +8,10 @@ namespace ZiraatBankUzPortal.Shared.DisplayModel
 {
     public class LoginUserDisplayModel
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string UserId  { get; set; }
-        public string RoleName { get; set; }
-        public string AccessToken { get; set; }
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
+        public string? EmployeeId  { get; set; }
+        public string? RoleName { get; set; }
+        public string? AccessToken { get; set; }
     }
 }

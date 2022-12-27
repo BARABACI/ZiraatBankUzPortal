@@ -132,7 +132,6 @@ namespace ZiraatBankUzPortal.Client.Pages
         }
         async Task UploadFiles(InputFileChangeEventArgs e)
         {
-
             var format = "image/png";
             var imageFile = await e.File.RequestImageFileAsync(format, 200, 200);
             var buffer = new byte[imageFile.Size];
@@ -204,16 +203,6 @@ namespace ZiraatBankUzPortal.Client.Pages
                 _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Title names not loaded.", Severity.Error);
             }
         }
-        private async Task<IEnumerable<int>> SearchEmployeeTitleComboBoxData(string value)
-        {
-            await Task.Delay(5);
-
-            if (string.IsNullOrEmpty(value))
-                return employeeTitleNameList.Select(x => x.ID);
-
-            return employeeTitleNameList.Where(x => x.TITLE.Contains(value, StringComparison.InvariantCultureIgnoreCase))
-                .Select(x => x.ID);
-        }
         private async Task GetEmployeePositionComboBoxData()
         {
             _httpResponse = await _employeeService.GetEmployeePositionComboBoxData();
@@ -230,16 +219,6 @@ namespace ZiraatBankUzPortal.Client.Pages
                 _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Position names not loaded.", Severity.Error);
             }
         }
-        private async Task<IEnumerable<int>> SearchEmployeePositionComboBoxData(string value)
-        {
-            await Task.Delay(5);
-
-            if (string.IsNullOrEmpty(value))
-                return employeePositionNameList.Select(x => x.ID);
-
-            return employeePositionNameList.Where(x => x.POSITION.Contains(value, StringComparison.InvariantCultureIgnoreCase))
-                .Select(x => x.ID);
-        }
         private async Task GetEmployeeLocationComboBoxData()
         {
             _httpResponse = await _employeeService.GetEmployeeLocationComboBoxData();
@@ -255,16 +234,6 @@ namespace ZiraatBankUzPortal.Client.Pages
             {
                 _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Location names not loaded.", Severity.Error);
             }
-        }
-        private async Task<IEnumerable<int>> SearchEmployeeLocationComboBoxData(string value)
-        {
-            await Task.Delay(5);
-
-            if (string.IsNullOrEmpty(value))
-                return employeeLocationNameList.Select(x => x.ID);
-
-            return employeeLocationNameList.Where(x => x.LOCATION.Contains(value, StringComparison.InvariantCultureIgnoreCase))
-                .Select(x => x.ID);
         }
     }
 }

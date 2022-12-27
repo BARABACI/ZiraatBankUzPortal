@@ -15,7 +15,7 @@ namespace ZiraatBankUzPortal.Shared.DataAccess
     public class OracleDataAccess : IOracleDataAccess
     {
         private readonly IConfiguration _config;
-
+        IList<dynamic> resultMultiData = new List<dynamic>();
 
         public OracleDataAccess(IConfiguration config)
         {
@@ -35,7 +35,24 @@ namespace ZiraatBankUzPortal.Shared.DataAccess
                                                           commandType: CommandType.StoredProcedure);
                 return rows.ToList();
             }
-        }  
+        }
+
+        public async Task<IList<dynamic>> LoadMultipleData<T, U>(string storedProcedure, U parameters, string connectionStringName)
+        {
+            string connectionString = _config.GetConnectionString(connectionStringName);
+            using (var connection = new OracleConnection(connectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                var multiData = await connection.QueryMultipleAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+                while (!multiData.IsConsumed)
+                {
+                    resultMultiData.Add(multiData.Read().ToList());
+                }
+                   
+            }
+            return resultMultiData;
+        }
 
         public async Task<int> SaveDataAsync<T>(string storedProcedure, T parameters, string connectionStringName)
         {
@@ -45,10 +62,10 @@ namespace ZiraatBankUzPortal.Shared.DataAccess
             {
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
-                return await connection.ExecuteAsync(storedProcedure,parameters,commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
             }
         }
-        
+
 
 
     }

@@ -18,7 +18,6 @@ namespace ZiraatBankUzPortal.Core.Services
     {
         private readonly IOracleDataAccess _orcaleDataAccess;
         private readonly IConfiguration _config;
-        public string? imageBase64 { get; set; }
         public EmployeeDataService(IOracleDataAccess orcaleDataAccess, IConfiguration config)
         {
             _orcaleDataAccess = orcaleDataAccess;
@@ -109,17 +108,8 @@ namespace ZiraatBankUzPortal.Core.Services
             parameters.Add("p_PASSWORD", OracleMappingType.Varchar2, ParameterDirection.Input, password);
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
             var user = await _orcaleDataAccess.LoadDataAsync<LoginUserDisplayModel, dynamic>("GEN_SEL_BLAZORLOGINID_SP", parameters.dynamicParameters, "OracleConnectionString");
-
-            foreach (var p in user)
-            {
-                loginUser.UserName = p.UserName;
-                loginUser.Password = p.Password;
-                loginUser.UserId = p.UserId;
-                loginUser.RoleName = p.RoleName;
-                loginUser.AccessToken = GenerateAccessToken(p.UserId, p.UserName, p.RoleName);
-            }
-            return loginUser;
-
+            user.First().AccessToken = GenerateAccessToken(user.First().EmployeeId, user.First().UserName, user.First().RoleName); 
+            return user.First();
         }
         private string GenerateAccessToken(string userId, string userName, string role)
         {

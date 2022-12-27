@@ -12,6 +12,7 @@ namespace ZiraatBankUzPortal.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeDataRepository _employeeDataRepository;

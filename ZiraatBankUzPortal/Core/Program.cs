@@ -22,6 +22,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOracleDataAccess, OracleDataAccess>();
 builder.Services.AddSingleton<IEmployeeDataService, EmployeeDataService>();
 builder.Services.AddSingleton<IMenuDataService, MenuDataService>();
+builder.Services.AddSingleton<IEmployeePhoneBookService, EmployeePhoneBookService>();
+builder.Services.AddSingleton<IInternalExportExcelService, InternalExportExcelService>();
 
 
 var app = builder.Build();

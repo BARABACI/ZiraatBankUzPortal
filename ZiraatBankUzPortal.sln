@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZiraatBankUzPortal.Shared",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZiraatBankUzPortal.Core", "ZiraatBankUzPortal\Core\ZiraatBankUzPortal.Core.csproj", "{E7EF6487-1F26-4CD0-A9CB-93E02531ABF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorComponents.Shared", "ZiraatBankUzPortal\Components\BlazorComponents.Shared\BlazorComponents.Shared.csproj", "{C7E0012E-EDB3-4F2A-B2B7-120669F99592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorComponents.Shared", "ZiraatBankUzPortal\Components\BlazorComponents.Shared\BlazorComponents.Shared.csproj", "{C7E0012E-EDB3-4F2A-B2B7-120669F99592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

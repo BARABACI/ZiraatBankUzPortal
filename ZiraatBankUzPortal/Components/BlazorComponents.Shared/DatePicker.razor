@@ -1,0 +1,36 @@
+﻿@inherits MudDatePicker
+@using System.Globalization;
+<MudDatePicker @bind-Date="@DpText" Margin="Margin.Dense" Variant="Variant.Outlined" Required="@required" RequiredError="@requiredError" Label="@label"></MudDatePicker>
+
+@code{
+    [Parameter] public string? _label{ get; set; }
+    [Parameter] public bool _required { get; set; }
+    [Parameter] public string? _requiredError { get; set; }
+    [Parameter]
+    public DateTime? DpText
+    {
+        get => dpText;
+        set
+        {
+            if (dpText == value) return;
+            dpText = value;
+            DpTextChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<DateTime?> DpTextChanged { get; set; }
+    private string? label;
+    private DateTime? dpText;
+    private bool required;
+    public string? requiredError;
+
+    protected override void OnParametersSet()
+    {
+        label = _label;
+        dpText = DpText;
+        required = _required;
+        requiredError = _requiredError;
+        base.OnParametersSet();
+    }
+}

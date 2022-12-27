@@ -16,6 +16,10 @@ namespace ZiraatBankUzPortal.Client.Pages
             await GetPageRole();
             await GetAllEmployee();
         }
+        private async Task ReloadDataAsync()
+        {
+            await GetAllEmployee();
+        }
         private bool Search(EmployeeDisplayModel employee)
         {
             if (string.IsNullOrWhiteSpace(_searchString))

@@ -1,0 +1,31 @@
+﻿@page "/internalexportexcel"
+<AuthorizeView Roles="@_pageRoles" Context="internalFormContent">
+    <Authorized>
+        @if (waitScreen == 1)
+        {
+            <WaitScreen></WaitScreen>
+        }
+        else
+        {
+            <MudPaper Class="pa-8 ma-2" Elevation="3">
+                    <MudGrid>
+                        <MudItem xs="12" md="6">
+                        <DatePicker @bind-DpText="@startdate" _required="true" _requiredError="Start date is required!" _label="Start Date"></DatePicker>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                        <DatePicker @bind-DpText="@enddate" _required="true" _requiredError="End date is required!" _label="End Date"></DatePicker>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <Button  OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
+                        </MudItem>
+                    </MudGrid>
+            </MudPaper>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <NotAccess />
+    </NotAuthorized>
+</AuthorizeView>
+
+
+

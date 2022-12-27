@@ -1,0 +1,21 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <MudMenu>
+            <ActivatorContent>
+                <MudAvatar Image="images/toiletvisit.jpg" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="Logout">Log Out</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    public async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("token");
+        await _authStateProvider.GetAuthenticationStateAsync();
+        _navigationManager.NavigateTo("/login");
+    }
+}

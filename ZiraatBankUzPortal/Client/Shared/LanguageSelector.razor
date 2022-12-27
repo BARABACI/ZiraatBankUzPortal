@@ -2,18 +2,42 @@
 @using ZiraatBankUzPortal.Shared.Constants
 @inject Microsoft.Extensions.Localization.IStringLocalizer<LanguageSelector> _localizer
 
-<MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
-    @foreach (var language in LocalizationConstants.SupportedLanguages)
-    {
-        <MudMenuItem OnClick="(()=> ChangeLanguageAsync(language.Code))">@_localizer[language.DisplayName]</MudMenuItem>
-    }
+<MudMenu FullWidth="true">
+    <ActivatorContent>
+        <MudChip Icon="@Icons.Material.Filled.Translate" Style="@($"background:{Colors.Shades.White};")">@currentLanguage</MudChip>
+    </ActivatorContent>
+    <ChildContent>
+        @foreach (var language in LocalizationConstants.SupportedLanguages)
+        {
+            <MudMenuItem OnClick="(()=> ChangeLanguageAsync(language.Code,language.DisplayName))">@_localizer[language.DisplayName]</MudMenuItem>
+        }
+    </ChildContent>
 </MudMenu>
 
 @code
 {
-    private async Task ChangeLanguageAsync(string languageCode)
+    public string currentLanguage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string currentLanguageCode = await _localStorage.GetItemAsStringAsync("culture");
+        await GetCurrentLanguageDisplay(currentLanguageCode);
+    }
+    private async Task ChangeLanguageAsync(string languageCode, string displayName)
     {
         await _localStorage.SetItemAsync<string>("culture", languageCode);
+        await _localStorage.SetItemAsync<string>("i18nextLng", languageCode);
         _navigationManager.NavigateTo(_navigationManager.Uri, forceLoad: true);
     }
+    private async Task GetCurrentLanguageDisplay(string languageCode)
+    {
+        foreach (var language in LocalizationConstants.SupportedLanguages)
+        {
+            if (language.Code == languageCode.Substring(1, languageCode.Length - 1).Substring(0, languageCode.Length - 2))
+            {
+                currentLanguage = language.DisplayName;
+            }
+        }
+    }
+
 }

@@ -1,0 +1,23 @@
+﻿@inherits MudButton
+<MudButton Variant="Variant.Filled" Color="@color" StartIcon="@startIcon" ButtonType="@buttonType" @onclick="OnClickCallback">@label</MudButton>
+@code{
+    [Parameter] public string? _label{ get; set; }
+    [Parameter] public ButtonType _buttonType { get; set; }
+    [Parameter] public string? _startIcon { get; set; }
+    [Parameter] public Color _color { get; set; }
+    [Parameter] public EventCallback OnClickCallback { get; set; }
+
+    private string? label;
+    public ButtonType buttonType;
+    public string? startIcon;
+    public Color color;
+
+    protected override void OnParametersSet()
+    {
+        label = _label;
+        buttonType = _buttonType;
+        startIcon = _startIcon;
+        color = _color;
+        base.OnParametersSet();
+    }
+}

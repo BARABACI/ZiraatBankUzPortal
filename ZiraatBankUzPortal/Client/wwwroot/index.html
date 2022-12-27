@@ -16,7 +16,12 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="vh-100 d-flex align-items-center justify-content-center gap-3">
+            <div class="h5 spinner-border" style="color:red"></div>
+            <div class="h2">Please wait</div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -27,6 +32,7 @@
     <script>navigator.serviceWorker.register('service-worker.js');</script>
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js?v=6.0.16"></script>
+    <script src="./images/openfile.js"></script>
 </body>
 
 </html>

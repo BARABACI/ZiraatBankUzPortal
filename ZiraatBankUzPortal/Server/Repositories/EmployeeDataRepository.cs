@@ -18,44 +18,44 @@ namespace ZiraatBankUzPortal.Server.Repositories
     public class EmployeeDataRepository : IEmployeeDataRepository
     {
         private readonly IConfiguration _config;
-        private readonly IEmployeeDataService _userDataService;
-        public EmployeeDataRepository(IConfiguration config, IEmployeeDataService userDataService)
+        private readonly IEmployeeDataService _employeeDataService;
+        public EmployeeDataRepository(IConfiguration config, IEmployeeDataService employeeDataService)
         {
             _config = config;
-            _userDataService = userDataService;
+            _employeeDataService = employeeDataService;
         }
 
         public async Task CreateEmployee(EmployeeCreateDto employeeModel)
         {
-            await _userDataService.CreateEmployee(employeeModel);
+            await _employeeDataService.CreateEmployee(employeeModel);
         }
 
         public async Task<IEnumerable<EmployeeDisplayModel>> GetAllEmployeeAsync()
         {
-            var user = await _userDataService.GetAllEmployeeAsync();
+            var user = await _employeeDataService.GetAllEmployeeAsync();
             return user;
         }
 
 
         public async Task<EmployeeDisplayModel> GetEmployeeByIdAsync(int employeId)
         {
-            var user = await _userDataService.GetEmployeeByIdAsync(employeId);
+            var user = await _employeeDataService.GetEmployeeByIdAsync(employeId);
             return user;
         }
 
         public async Task UpdateEmployee(EmployeeUpdateDto employeeModel)
         {
-            await _userDataService.UpdateEmployee(employeeModel);
+            await _employeeDataService.UpdateEmployee(employeeModel);
         }
 
         public async Task DeleteEmployee(int employeeId)
         {
-            await _userDataService.DeleteEmployee(employeeId);
+            await _employeeDataService.DeleteEmployee(employeeId);
         }
 
         public async Task<LoginUserDisplayModel> GetLoginEmployeeByIdAsync(string userName, string password)
         {
-            var user = await _userDataService.GetLoginEmployeeByIdAsync(userName, password);
+            var user = await _employeeDataService.GetLoginEmployeeByIdAsync(userName, password);
             return user;
 
         }
@@ -85,19 +85,19 @@ namespace ZiraatBankUzPortal.Server.Repositories
         }
         public async Task<IEnumerable<EmployeeTitleDto>> GetEmployeeTitleComboBoxData()
         {
-            var data = await _userDataService.GetEmployeeTitleComboBoxData();
+            var data = await _employeeDataService.GetEmployeeTitleComboBoxData();
             return data;
         }
 
         public async Task<IEnumerable<EmployeePositionDto>> GetEmployeePositionComboBoxData()
         {
-            var data = await _userDataService.GetEmployeePositionComboBoxData();
+            var data = await _employeeDataService.GetEmployeePositionComboBoxData();
             return data;
         }
 
         public async Task<IEnumerable<EmployeeLocationDto>> GetEmployeeLocationComboBoxData()
         {
-            var data = await _userDataService.GetEmployeeLocationComboBoxData();
+            var data = await _employeeDataService.GetEmployeeLocationComboBoxData();
             return data;
         }
     }
