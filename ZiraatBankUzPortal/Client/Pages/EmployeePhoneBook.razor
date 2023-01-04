@@ -6,31 +6,16 @@
 </style>
 
 <br />
+<MudPaper Class="pa-6 ma-2" Elevation="10">
+    <h4>Employee Phone Book</h4>
+</MudPaper>
 <MudTable Hover="true" Elevation="10" Items="phonebook" Filter="new Func<EmployeePhoneBookDisplayModel, bool>(Search)" @bind-user="phonebook" Striped="true" Dense="true" Bordered="true">
     <ToolBarContent>
         <div class="justify-center mud-text-align-center">
-            @if (true)
-            {
-                <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
-                @if (_canExportPhoneBook)
-                {
-                    <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
-                }
-            }
-            else
-            {
-                <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
-                @if (true)
-                {
-                    <MudButton DisableElevation Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">Export</MudButton>
-                }
-            }
+                <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
         </div>
         <MudSpacer />
-        @if (true)
-        {
             <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Employees" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
-        }
     </ToolBarContent>
     <HeaderContent>
         <MudTh Style="text-align:right">Picture</MudTh>

@@ -28,6 +28,10 @@ namespace ZiraatBankUzPortal.Client.Shared
                 userName = user.GetName();
                 userRole = user.GetRole();
             }
+            else
+            {
+                _navigationManager.NavigateTo("/Login");
+            }
         }
     }
 }

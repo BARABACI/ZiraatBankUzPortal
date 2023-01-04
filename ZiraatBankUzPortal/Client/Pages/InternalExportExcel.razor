@@ -7,18 +7,21 @@
         }
         else
         {
-            <MudPaper Class="pa-8 ma-2" Elevation="3">
-                    <MudGrid>
-                        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-6 ma-2" Elevation="10">
+                <h4>Internal Export Excel</h4>
+            </MudPaper>
+            <MudPaper Class="pa-6 ma-2" Elevation="10">
+                <MudGrid>
+                    <MudItem xs="12" md="12">
+                        <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
                         <DatePicker @bind-DpText="@startdate" _required="true" _requiredError="Start date is required!" _label="Start Date"></DatePicker>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
+                    </MudItem>
+                    <MudItem xs="12" md="6">
                         <DatePicker @bind-DpText="@enddate" _required="true" _requiredError="End date is required!" _label="End Date"></DatePicker>
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <Button  OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
-                        </MudItem>
-                    </MudGrid>
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         }
     </Authorized>

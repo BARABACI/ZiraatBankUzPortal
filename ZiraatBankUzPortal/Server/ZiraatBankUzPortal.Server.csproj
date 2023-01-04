@@ -25,5 +25,11 @@
     <ProjectReference Include="..\Shared\ZiraatBankUzPortal.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="serverappsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
 </Project>

@@ -131,12 +131,24 @@ namespace ZiraatBankUzPortal.Client.Pages
                 await GetDataClientP1Async();
                 await GetDataGeneralArghAsync();
                 await GetDataGeneralArgh1Async();
-                if (clientPModel != null && clientP1Model != null && generalArghModel != null && generalArgh1Model != null)
+                if (clientPModel.Count != 0)
                 {
                     _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalClientPDisplayModel>)clientPModel, "client_p");
+                }
+                if (clientP1Model.Count != 0)
+                {
                     _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalClientP1DisplayModel>)clientP1Model, "client_p1");
+                }
+                if (generalArghModel.Count != 0)
+                {
                     _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalGeneralArghDisplayModel>)generalArghModel, "general_argh");
+                }
+                if (generalArgh1Model.Count != 0)
+                {
                     _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalGeneralArghDisplayModel>)generalArgh1Model, "general_argh1");
+                }
+                if (clientPModel.Count != 0 || clientP1Model.Count != 0 || generalArghModel.Count != 0 || generalArgh1Model.Count != 0)
+                {
                     _excelService.ExportExcelFile();
                 }
                 waitScreen = 0;

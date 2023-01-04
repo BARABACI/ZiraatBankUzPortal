@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Configuration;
 using System.Text;
 using ZiraatBankUzPortal.Core.Services;
@@ -14,6 +16,8 @@ using ZiraatBankUzPortal.Server.Repositories;
 using ZiraatBankUzPortal.Shared.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("serverappsettings.json");
 
 // Add services to the container.
 

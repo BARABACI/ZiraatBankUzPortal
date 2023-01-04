@@ -1,0 +1,11 @@
+﻿<MudMenu Class="pa-2">
+    <ActivatorContent>
+        <MudIconButton Icon="@Icons.Material.Filled.Phone" Variant="Variant.Filled" Color="Color.Success" OnClick="GoToEmployeePhoneBook"></MudIconButton>
+    </ActivatorContent>
+</MudMenu>
+@code {
+    private void GoToEmployeePhoneBook()
+    {
+        _navigationManager.NavigateTo("/employeephonebook");
+    }
+}

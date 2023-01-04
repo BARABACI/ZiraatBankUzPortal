@@ -13,7 +13,7 @@ using ZiraatBankUzPortal.Core.Services;
 using ZiraatBankUzPortal.Shared.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddJsonFile("coreappsettings.json");
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();

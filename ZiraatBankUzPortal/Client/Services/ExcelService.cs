@@ -1,6 +1,8 @@
 ﻿using BlazorComponents.Shared;
 using ClosedXML.Excel;
 using ClosedXML.Report;
+using ClosedXML.Report.Utils;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Reflection;
@@ -48,7 +50,15 @@ namespace ZiraatBankUzPortal.Client.Services
             {
                 for (int j = 0; j < columname.Count; j++)
                 {
-                    ws.Cell(i + 2, j+1).Value = data[i].GetType().GetProperty(columname[j]).GetValue(data[i], null);
+                    var value = data[i].GetType().GetProperty(columname[j]).GetValue(data[i], null);
+                    if(value != null && value.ToString().IsNumber() && value.ToString().Length > 18)
+                    {
+                        ws.Cell(i + 2, j + 1).Value = "'" + value;
+                    }
+                    else
+                    {
+                        ws.Cell(i + 2, j + 1).Value = value;
+                    }              
                 }
             }          
         }

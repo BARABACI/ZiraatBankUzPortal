@@ -10,6 +10,13 @@ namespace ZiraatBankUzPortal.Shared.DisplayModel
 {
     public class InternalClientP1DisplayModel
     {
+        public string? BRANCH { get; set; }
+        public string? ID { get; set; }
+        public string? NAME { get; set; }
+        public string? BIRTHDAY { get; set; }
+        public string? POST_ADDRESS { get; set; }
+        public string? PASSPORT_TYPE { get; set; }
+        public string? PASSPORT_SERIAL { get; set; }
         public string? PASSPORT_NUMBER { get; set; }
         public string? PASSPORT_PLACE_REGISTRATION { get; set; }
         public string? PASSPORT_DATE_REGISTRATION { get; set; }

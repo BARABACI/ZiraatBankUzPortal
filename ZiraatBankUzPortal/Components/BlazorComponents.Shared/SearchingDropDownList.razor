@@ -3,8 +3,8 @@
 
 <MudAutocomplete T="int" Label="@label" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" ResetValueOnEmptyText="true" SearchFunc="@SearchComboBoxData" For="@(() => selectValue)" ToStringFunc="@(i => data.FirstOrDefault(b => b.Key == i)?.Value ?? string.Empty)" OffsetY="true" @bind-Value="CurrentValue"></MudAutocomplete>
 
-@code{
-    [Parameter] public string? _label{ get; set; }
+@code {
+    [Parameter] public string? _label { get; set; }
     [Parameter] public List<DropDownListModel>? _data { get; set; }
     [Parameter]
     public int CurrentValue
@@ -38,6 +38,9 @@
         await Task.Delay(5);
 
         if (string.IsNullOrEmpty(value))
+            return _data.Select(x => x.Key);
+
+        if (data.Any(x => x.Value.Equals(value,StringComparison.InvariantCultureIgnoreCase)))
             return _data.Select(x => x.Key);
 
         return data.Where(x => x.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase))

@@ -31,7 +31,7 @@ namespace ZiraatBankUzPortal.Client.Services
         {
             string token = await _localStorage.GetItemAsStringAsync("token");
             token = token.Substring(1, token.Length - 1).Substring(0, token.Length - 2);
-            var request = new HttpRequestMessage(HttpMethod.Delete, _http.BaseAddress + "api/Employee/DeleteEmployee/" + employeeId);
+            var request = new HttpRequestMessage(HttpMethod.Delete, _http.BaseAddress + "api/Employee/DeleteEmployee/" + employeeId+ "?api-version=1");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return await _http.SendAsync(request);
         }

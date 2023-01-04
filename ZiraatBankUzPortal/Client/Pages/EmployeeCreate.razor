@@ -2,10 +2,13 @@
 <br />
 <AuthorizeView Roles="@_pageRoles">
     <Authorized>
+        <MudPaper Class="pa-6 ma-2" Elevation="10">
+            <h4>Employee Create</h4>
+        </MudPaper>
         <EditForm Model="@employee" OnValidSubmit="@HandleValidSubmit" Context="tableRowContext">
             <MudGrid>
                 <MudItem xs="12" sm="4" md="3">
-                    <MudPaper Class="pa-8 ma-2" Elevation="3">
+                    <MudPaper Class="pa-8 ma-2" Elevation="10">
                         <div class="d-flex justify-center mb-4">
                             @if (!string.IsNullOrEmpty(@imageBase64))
                             {
@@ -30,7 +33,7 @@
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" sm="8" md="9">
-                    <MudPaper Class="pa-8 ma-2" Elevation="3">
+                    <MudPaper Class="pa-8 ma-2" Elevation="10">
                         <MudGrid>
                             <MudItem xs="12" md="6">                       
                                 <TextBox T="string" _label="First Name" _required="true" _requiredError="First name is required!" @bind-TbText="@employee.Firstname"></TextBox>
