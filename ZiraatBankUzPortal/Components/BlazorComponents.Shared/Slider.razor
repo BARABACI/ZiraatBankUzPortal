@@ -1,0 +1,30 @@
+﻿<MudCarousel Class="mud-width-full" Style="height:150px" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+    @ChildContent
+</MudCarousel>
+@code {
+    [Parameter] public bool _arrows { get; set; }
+    [Parameter] public bool _bullets { get; set; }
+    [Parameter] public bool _enableSwipeGesture { get; set; }
+    [Parameter] public bool _autocycle { get; set; }
+    [Parameter] public string _sliderHeight { get; set; }
+    [Parameter] public Transition _transition { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = true;
+    private string sliderHeight = "200px";
+    private Transition transition = Transition.Slide;
+
+    protected override void OnParametersSet()
+    {
+        arrows = _arrows != null ? _arrows : arrows;
+        bullets = _bullets != null ? _bullets : bullets;
+        enableSwipeGesture = _enableSwipeGesture != null ? _enableSwipeGesture : enableSwipeGesture;
+        autocycle = _autocycle != null ? _autocycle : autocycle;
+        sliderHeight = _sliderHeight != null ? _sliderHeight : sliderHeight;
+        transition = _transition != null ? _transition : transition;
+        base.OnParametersSet();
+    }
+}

@@ -12,17 +12,17 @@ namespace ZiraatBankUzPortal.Shared.Constants
             new LanguageCode
             {
                 Code = "en-US",
-                DisplayName= "English"
+                DisplayName= "EN"
             },
             new LanguageCode
             {
                 Code = "tr-TR",
-                DisplayName = "Türkçe"
+                DisplayName = "TR"
             },
             new LanguageCode
             {
                 Code = "ru-RU",
-                DisplayName = "Русский"
+                DisplayName = "RU"
             }
         };
     }

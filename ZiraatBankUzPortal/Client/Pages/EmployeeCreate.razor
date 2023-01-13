@@ -1,10 +1,8 @@
 ﻿@page "/employeecreate"
+@inject IStringLocalizer<EmployeeCreate> _localizer
 <br />
 <AuthorizeView Roles="@_pageRoles">
     <Authorized>
-        <MudPaper Class="pa-6 ma-2" Elevation="10">
-            <h4>Employee Create</h4>
-        </MudPaper>
         <EditForm Model="@employee" OnValidSubmit="@HandleValidSubmit" Context="tableRowContext">
             <MudGrid>
                 <MudItem xs="12" sm="4" md="3">
@@ -27,7 +25,7 @@
                                        Size="Size.Small"
                                        StartIcon="@Icons.Filled.CloudUpload"
                                        for="fileInput">
-                                Upload Image
+                                @_localizer["UploadImageText"]
                             </MudButton>
                         </MudCardActions>
                     </MudPaper>
@@ -35,32 +33,38 @@
                 <MudItem xs="12" sm="8" md="9">
                     <MudPaper Class="pa-8 ma-2" Elevation="10">
                         <MudGrid>
+                             <MudItem xs="12" md="6">                       
+                                <TextBox T="int" _label="@_localizer["FrmRegistrationNumber"]" _required="true" _requiredError="Registration number is required!" @bind-TbText="@employee.RegistrationNumber"></TextBox>
+                            </MudItem>
                             <MudItem xs="12" md="6">                       
-                                <TextBox T="string" _label="First Name" _required="true" _requiredError="First name is required!" @bind-TbText="@employee.Firstname"></TextBox>
+                                <TextBox T="string" _label="@_localizer["FrmFirstName"]" _required="true" _requiredError="First name is required!" @bind-TbText="@employee.Firstname"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <TextBox T="string" _label="Last Name" _required="true" _requiredError="Last name is required!" @bind-TbText="@employee.Lastname"></TextBox>
+                                <TextBox T="string" _label="@_localizer["FrmLastName"]" _required="true" _requiredError="Last name is required!" @bind-TbText="@employee.Lastname"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Tittle Name*" _data="tittleAutocomplateModel" @bind-CurrentValue="employee.TitleId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="@_localizer["FrmTittleName"]" _data="tittleAutocomplateModel" @bind-CurrentValue="employee.TitleId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Position Name*" _data="positionAutocomplateModel" @bind-CurrentValue="employee.PositionId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="@_localizer["FrmPositionName"]" _data="positionAutocomplateModel" @bind-CurrentValue="employee.PositionId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <SearchingDropDownList T="int" _label="Location Name*" _data="locationAutocomplateModel" @bind-CurrentValue="employee.LocationId"></SearchingDropDownList>
+                                <SearchingDropDownList T="int" _label="@_localizer["FrmLocationName"]" _data="locationAutocomplateModel" @bind-CurrentValue="employee.LocationId"></SearchingDropDownList>
+                            </MudItem>
+                             <MudItem xs="12" md="6">
+                               <SearchingDropDownList T="int" _label="@_localizer["FrmDepartmentName"]" _data="departmentAutocomplateModel" @bind-CurrentValue="employee.DepartmentId"></SearchingDropDownList>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <TextBox T="string" _label="IPT No" _required="true" _requiredError="IPT no is required!" @bind-TbText="@employee.IPT"></TextBox>
+                                <TextBox T="string" _label="@_localizer["FrmIpt"]" _required="true" _requiredError="IPT no is required!" @bind-TbText="@employee.IPT"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <TextBox T="string" _label="Cell Phone" _required="true" _requiredError="Cell phone is required!" @bind-TbText="@employee.CellPhone"></TextBox>
+                                <TextBox T="string" _label="@_localizer["FrmCellPhone"]" _required="true" _requiredError="Cell phone is required!" @bind-TbText="@employee.CellPhone"></TextBox>
                             </MudItem>
                             <MudItem xs="12" md="6">
-                                <DatePicker @bind-DpText="@birthdate" _required="true" _requiredError="Date of birth is required!" _label="Date Of Birth"></DatePicker>
+                                <DatePicker @bind-DpText="@birthdate" _required="true" _requiredError="Date of birth is required!" _label="@_localizer["FrmDateOfBirth"]"></DatePicker>
                             </MudItem>
                             <MudItem xs="12" Class="d-flex justify-end flex-grow-1 gap-4">
-                                <Button _color="Color.Success" _startIcon="@Icons.Material.Filled.Save" _buttonType="ButtonType.Submit" _label="Save"></Button>
+                                <Button _color="Color.Success" _startIcon="@Icons.Material.Filled.Save" _buttonType="ButtonType.Submit" _label="@_localizer["FrmSaveButton"]"></Button>
                             </MudItem>
                         </MudGrid>
                     </MudPaper>

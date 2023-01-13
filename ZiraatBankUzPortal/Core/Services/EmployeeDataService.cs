@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using NuGet.Common;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -108,8 +109,8 @@ namespace ZiraatBankUzPortal.Core.Services
             parameters.Add("p_PASSWORD", OracleMappingType.Varchar2, ParameterDirection.Input, password);
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
             var user = await _orcaleDataAccess.LoadDataAsync<LoginUserDisplayModel, dynamic>("GEN_SEL_BLAZORLOGINID_SP", parameters.dynamicParameters, "OracleConnectionString");
-            user.First().AccessToken = GenerateAccessToken(user.First().EmployeeId, user.First().UserName, user.First().RoleName); 
-            return user.First();
+            if(user.Count !=0) user.First().AccessToken = GenerateAccessToken(user.First().EmployeeId, user.First().UserName, user.First().RoleName); 
+            return user.FirstOrDefault();
         }
         private string GenerateAccessToken(string userId, string userName, string role)
         {
@@ -159,6 +160,14 @@ namespace ZiraatBankUzPortal.Core.Services
             DataOracleParameters parameters = new DataOracleParameters();
             parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
             var data = await _orcaleDataAccess.LoadDataAsync<EmployeeLocationDto, dynamic>("GEN_SEL_EMPLOYEELOCATIONS_SP", parameters.dynamicParameters, "OracleConnectionString");
+            return data;
+        }
+        public async Task<IEnumerable<EmployeeDepartmentDto>> GetEmployeeDepartmentComboBoxData()
+        {
+            Utils.NLogMessage(GetType(), $"{"GetEmployeeDepartmentComboBoxData()"}", Utils.NLogType.Info);
+            DataOracleParameters parameters = new DataOracleParameters();
+            parameters.Add("RC1", OracleMappingType.RefCursor, ParameterDirection.Output);
+            var data = await _orcaleDataAccess.LoadDataAsync<EmployeeDepartmentDto, dynamic>("GEN_SEL_EMPLOYEEDEPARTMENTS_SP", parameters.dynamicParameters, "OracleConnectionString");
             return data;
         }
     }

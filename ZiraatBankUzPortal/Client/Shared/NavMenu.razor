@@ -1,4 +1,5 @@
 ﻿@inject HttpClient Http
+@inject IStringLocalizer<NavMenu> _localizer
 <MudNavMenu>
     @if (menuList == null)
     {
@@ -16,10 +17,10 @@
                     {
                         @if (ml.PageLink != "/")
                         {
-                            <MudNavLink Href="@('/'+ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@ml.MenuName</MudNavLink>
+                            <MudNavLink Href="@('/'+ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@_localizer[ml.MenuName]</MudNavLink>
                         }
                         else{
-                            <MudNavLink Href="@(ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@ml.MenuName</MudNavLink>
+                            <MudNavLink Href="@(ml.PageLink)" Match="NavLinkMatch.All" Icon="@ml.IconName">@_localizer[ml.MenuName]</MudNavLink>
                         }
                     }
                 }
@@ -27,12 +28,12 @@
                 {
                     @if (ml.PageRoles.Split(',').Contains(userRole))
                     {
-                        <MudNavGroup Title="@ml.MenuName" Icon="@ml.IconName">
+                        <MudNavGroup Title="@_localizer[ml.MenuName]" Icon="@ml.IconName">
                             @foreach (var mlp in menuList)
                             {
-                                @if (ml.MenuId == mlp.ParentMenuId)
+                                @if (ml.MenuId == mlp.ParentMenuId && mlp.PageRoles.Split(',').Contains(userRole))
                                 {
-                                    <MudNavLink Match="NavLinkMatch.Prefix" Href="@mlp.PageLink" Icon="@mlp.IconName">@mlp.MenuName</MudNavLink>
+                                    <MudNavLink Match="NavLinkMatch.Prefix" Href="@mlp.PageLink" Icon="@mlp.IconName">@_localizer[mlp.MenuName]</MudNavLink>
                                 }
                             }
                         </MudNavGroup>

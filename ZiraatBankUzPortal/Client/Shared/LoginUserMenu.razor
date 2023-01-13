@@ -1,11 +1,12 @@
-﻿<AuthorizeView>
+﻿@inject IStringLocalizer<LoginUserMenu> _localizer
+<AuthorizeView>
     <Authorized>
         <MudMenu Class="pa-2">
             <ActivatorContent>
                 <MudAvatar Image="images/toiletvisit.jpg" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="Logout">Log Out</MudMenuItem>
+                <MudMenuItem OnClick="Logout">@_localizer["LogOut"]</MudMenuItem>
             </ChildContent>
         </MudMenu>
     </Authorized>

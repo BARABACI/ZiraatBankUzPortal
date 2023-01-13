@@ -14,6 +14,7 @@ namespace ZiraatBankUzPortal.Client.Contracts
         Task<HttpResponseMessage> GetEmployeeLocationComboBoxData();
         Task<HttpResponseMessage> GetEmployeePositionComboBoxData();
         Task<HttpResponseMessage> GetEmployeeTitleComboBoxData();
+        Task<HttpResponseMessage> GetEmployeeDepartmentComboBoxData();
         Task<HttpResponseMessage> UpdateEmployee(EmployeeUpdateDto updateEmployee);
     }
 }

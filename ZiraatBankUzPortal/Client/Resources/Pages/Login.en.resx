@@ -129,4 +129,10 @@
   <data name="UserName" xml:space="preserve">
     <value>User Name</value>
   </data>
+  <data name="ErrIncorrectUserNamePassText" xml:space="preserve">
+    <value>Username and password are incorrect.</value>
+  </data>
+  <data name="ErrPageRole" xml:space="preserve">
+    <value>Page roles not loaded.</value>
+  </data>
 </root>

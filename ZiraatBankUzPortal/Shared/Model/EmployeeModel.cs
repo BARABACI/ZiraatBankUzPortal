@@ -8,6 +8,7 @@
         public int TitleId { get; set; }
         public int PositionId { get; set; }
         public int LocationId { get; set; }
+        public int DepartmentId { get; set; }
         public string IPT { get; set; }
         public string CellPhone { get; set; }
         public string RecordUser { get; set; }
@@ -15,5 +16,8 @@
         public string RecordStatus { get; set; }
         public DateTime? DateofBirth { get; set; }
         public byte[] Picture { get; set; }
+        public string? Email { get; set; }
+        public string RegistrationNumber { get; set; }
+
     }
 }

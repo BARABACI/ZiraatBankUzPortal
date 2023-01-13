@@ -5,7 +5,6 @@ namespace ZiraatBankUzPortal.Core.Services
 {
     public interface IInternalExportExcelService
     {
-        Task<IEnumerable<object>> GetAllDataAsync();
         Task<IEnumerable<InternalClientPDisplayModel>> GetDataClientPAsync();
         Task<IEnumerable<InternalClientP1DisplayModel>> GetDataClientP1Async(string startdate, string enddate);
         Task<IEnumerable<InternalGeneralArghDisplayModel>> GetDataGenerealArghAsync(string enddate);

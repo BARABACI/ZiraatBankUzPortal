@@ -13,11 +13,6 @@ namespace ZiraatBankUzPortal.Server.Repositories
         {
             _internalExportExcelService = internalExportExcelService;
         }
-        public async Task<IEnumerable<object>> GetAllDataAsync()
-        {
-            var data = await _internalExportExcelService.GetAllDataAsync();
-            return data;
-        }
         public async Task<IEnumerable<InternalClientPDisplayModel>> GetDataClientPAsync()
         {
             var data = await _internalExportExcelService.GetDataClientPAsync();

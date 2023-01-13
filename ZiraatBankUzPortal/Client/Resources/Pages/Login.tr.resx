@@ -129,4 +129,10 @@
   <data name="UserName" xml:space="preserve">
     <value>Kullanıcı Adı</value>
   </data>
+  <data name="ErrIncorrectUserNamePassText" xml:space="preserve">
+    <value>Kullanıcı adı ve şifre hatalı.</value>
+  </data>
+  <data name="ErrPageRole" xml:space="preserve">
+    <value>Sayfa rolleri yüklemede hata oluştu.</value>
+  </data>
 </root>

@@ -100,5 +100,10 @@ namespace ZiraatBankUzPortal.Server.Repositories
             var data = await _employeeDataService.GetEmployeeLocationComboBoxData();
             return data;
         }
+        public async Task<IEnumerable<EmployeeDepartmentDto>> GetEmployeeDepartmentComboBoxData()
+        {
+            var data = await _employeeDataService.GetEmployeeDepartmentComboBoxData();
+            return data;
+        }
     }
 }

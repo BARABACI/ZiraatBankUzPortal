@@ -23,10 +23,12 @@ namespace ZiraatBankUzPortal.Client.Pages
         private EmployeeUpdateDto updateEmployee = new EmployeeUpdateDto();
         private List<DropDownListModel> tittleAutocomplateModel = new List<DropDownListModel>();
         private List<DropDownListModel> positionAutocomplateModel = new List<DropDownListModel>();
-        private List<DropDownListModel> locationAutocomplateModel = new List<DropDownListModel>();
+        private List<DropDownListModel> locationAutocomplateModel = new List<DropDownListModel>(); 
+        private List<DropDownListModel> departmentAutocomplateModel = new List<DropDownListModel>();
         private IEnumerable<EmployeeTitleDto> employeeTitleNameList;
         private IEnumerable<EmployeePositionDto> employeePositionNameList;
         private IEnumerable<EmployeeLocationDto> employeeLocationNameList;
+        private IEnumerable<EmployeeDepartmentDto> employeeDepartmentNameList;
         public DateTime? birthdate { get; set; }
         public string image;
         public byte[] imageByte;
@@ -42,6 +44,7 @@ namespace ZiraatBankUzPortal.Client.Pages
             await GetEmployeeTitleComboBoxData();
             await GetEmployeePositionComboBoxData();
             await GetEmployeeLocationComboBoxData();
+            await GetEmployeeDepartmentComboBoxData();
             if (employeeId != 0)
             {
                 await GetEmployeeInformation();
@@ -70,11 +73,13 @@ namespace ZiraatBankUzPortal.Client.Pages
                 }
 
                 updateEmployee.Id = employeeId;
+                updateEmployee.RegistrationNumber = employee.RegistrationNumber;
                 updateEmployee.Firstname = employee.Firstname;
                 updateEmployee.Lastname = employee.Lastname;
                 updateEmployee.TitleId = employee.TitleId;
                 updateEmployee.PositionId = employee.PositionId;
                 updateEmployee.LocationId = employee.LocationId;
+                updateEmployee.DepartmentId = employee.DepartmentId;
                 updateEmployee.IPT = employee.IPT;
                 updateEmployee.CellPhone = employee.CellPhone;
                 updateEmployee.RecordUser = authId.ToString();
@@ -108,12 +113,13 @@ namespace ZiraatBankUzPortal.Client.Pages
                     employee.Picture = imageByte;
                     createEmployee.Picture = employee.Picture;
                 }
-
+                createEmployee.RegistrationNumber = employee.RegistrationNumber;
                 createEmployee.Firstname = employee.Firstname;
                 createEmployee.Lastname = employee.Lastname;
                 createEmployee.TitleId = employee.TitleId;
                 createEmployee.PositionId = employee.PositionId;
                 createEmployee.LocationId = employee.LocationId;
+                createEmployee.DepartmentId = employee.DepartmentId;
                 createEmployee.IPT = employee.IPT;
                 createEmployee.CellPhone = employee.CellPhone;
                 createEmployee.RecordUser = authId.ToString();
@@ -233,6 +239,22 @@ namespace ZiraatBankUzPortal.Client.Pages
             else
             {
                 _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Location names not loaded.", Severity.Error);
+            }
+        }
+        private async Task GetEmployeeDepartmentComboBoxData()
+        {
+            _httpResponse = await _employeeService.GetEmployeeDepartmentComboBoxData();
+            if (_httpResponse.IsSuccessStatusCode)
+            {
+                employeeDepartmentNameList = await _httpResponse.Content.ReadFromJsonAsync<IEnumerable<EmployeeDepartmentDto>>();
+                foreach (var item in employeeDepartmentNameList)
+                {
+                    departmentAutocomplateModel.Add(new DropDownListModel() { Key = item.ID, Value = item.DEPARTMENT });
+                }
+            }
+            else
+            {
+                _snackBar.Add("(" + _httpResponse.StatusCode + ")" + "Department names not loaded.", Severity.Error);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿@page "/employeephonebook"
+﻿@page "/phonebook"
+@inject IStringLocalizer<PhoneBook> _localizer
 <style>
     .mud-table-container {
         overflow: auto;
@@ -6,26 +7,26 @@
 </style>
 
 <br />
-<MudPaper Class="pa-6 ma-2" Elevation="10">
-    <h4>Employee Phone Book</h4>
+<MudPaper Class="pa-4 mb-2" Elevation="10">
+    <h4>@_localizer["PageHeaderText"]</h4>
 </MudPaper>
 <MudTable Hover="true" Elevation="10" Items="phonebook" Filter="new Func<EmployeePhoneBookDisplayModel, bool>(Search)" @bind-user="phonebook" Striped="true" Dense="true" Bordered="true">
     <ToolBarContent>
         <div class="justify-center mud-text-align-center">
-                <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
+                <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="@_localizer["ButtonExcelText"]"></Button>
         </div>
         <MudSpacer />
-            <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Employees" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="@_localizer["SearchBoxText"]" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh Style="text-align:right">Picture</MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Location)">Location Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.CellPhone)">Cell Phone</MudTableSortLabel></MudTh>
+        <MudTh Style="text-align:right">@_localizer["DGPicture"]</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Firstname)">@_localizer["DGFirstName"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Lastname)">@_localizer["DGLastName"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Title)">@_localizer["DGTittleName"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Position)">@_localizer["DGPositionName"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.Location)">@_localizer["DGLocationName"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.IPT)">@_localizer["DGIpt"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<EmployeePhoneBookDisplayModel, object>(x => x.CellPhone)">@_localizer["DGCellPhone"]</MudTableSortLabel></MudTh>
     </HeaderContent>
     <RowTemplate Context="tableRowContext">
         <MudTd>

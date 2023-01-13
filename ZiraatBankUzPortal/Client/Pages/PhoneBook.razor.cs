@@ -4,11 +4,10 @@ using ZiraatBankUzPortal.Shared.DisplayModel;
 
 namespace ZiraatBankUzPortal.Client.Pages
 {
-    public partial class EmployeePhoneBook
+    public partial class PhoneBook
     {
         private IEnumerable<EmployeePhoneBookDisplayModel>? phonebook;
         private string _searchString = "";
-        private bool _canExportPhoneBook = true;
         protected override async Task OnInitializedAsync()
         {
             await GetAllEmployee();

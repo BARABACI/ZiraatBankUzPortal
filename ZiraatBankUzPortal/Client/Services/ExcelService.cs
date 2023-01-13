@@ -51,7 +51,7 @@ namespace ZiraatBankUzPortal.Client.Services
                 for (int j = 0; j < columname.Count; j++)
                 {
                     var value = data[i].GetType().GetProperty(columname[j]).GetValue(data[i], null);
-                    if(value != null && value.ToString().IsNumber() && value.ToString().Length > 18)
+                    if(value != null && value.ToString().IsNumber() && (value.ToString().Length > 18 || value.ToString().Substring(0,1) =="0"))
                     {
                         ws.Cell(i + 2, j + 1).Value = "'" + value;
                     }

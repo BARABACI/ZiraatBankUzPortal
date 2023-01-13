@@ -9,7 +9,7 @@ namespace ZiraatBankUzPortal.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Internal")]
+    [Authorize(Roles = "Admin,ComplianceDep")]
     public class InternalExportExcelController : Controller
     {
         private readonly IInternalExportExcelRepository _internalExportExcelRepository;
@@ -17,12 +17,6 @@ namespace ZiraatBankUzPortal.Server.Controllers
         public InternalExportExcelController(IInternalExportExcelRepository internalExportExcelRepository)
         {
             _internalExportExcelRepository = internalExportExcelRepository;
-        }
-        [HttpGet("Getall")]
-        public async Task<ActionResult<IEnumerable<object>>> Getall()
-        {
-            var data = await _internalExportExcelRepository.GetAllDataAsync();
-            return Ok(data);
         }
 
         [HttpGet("GetClientP")]

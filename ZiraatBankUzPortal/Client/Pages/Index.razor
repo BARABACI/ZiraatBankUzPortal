@@ -1,11 +1,174 @@
 ﻿@page "/"
-
+@inject IStringLocalizer<Index> _localizer
 <PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudPaper Class="pa-2 ma-2" Elevation="5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Link" Title="Link" />
+                        @_localizer["UsefulLinks"]
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <hr />
+            <MudCardContent>
+                <MudText>
+                    Oracle Financial services  - FLEXCUBE
+                </MudText>
+                <a href="https://172.18.10.12:7102/FCJNeoWeb/LoginServlet" target="_blank">https://172.18.10.12:7102/FCJNeoWeb/LoginServlet</a>
+            </MudCardContent>
+            <MudCardContent>
+                <MudText>
+                    Oracle Internet Banking  - OBDX
+                </MudText>
+                <a href="http://172.18.10.241:7777/" target="_blank">http://172.18.10.241:7777/</a>
+            </MudCardContent>
+            <MudCardContent>
+                <MudText>
+                    Flexcube OBB url for Branch teller - OBB
+                </MudText>
+                <a href="https://172.18.10.12:9061/app-shell/" target="_blank">https://172.18.10.12:9061/app-shell/</a>
+            </MudCardContent>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudPaper Class="pa-2 ma-2" Elevation="5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Assignment" Title="Assignment" />
+                        @_localizer["Documents"]
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <hr />
+            <MudCardContent>
+                <MudText>
+                    Etik Kurallar
+                </MudText>
+                <a href="/documents/odob_axloq_qoidalari.pdf" target="_blank">Odob_axloq_qoidalari.pdf</a>
+            </MudCardContent>
+            <MudCardContent>
+                <MudText>
+                    İnsan Kaynakları Yönetmeliği
+                </MudText>
+                <a href="/documents/инсон_ресурслари_тартиби_2022.pdf" target="_blank">инсон_ресурслари_тартиби_2022.pdf</a>
+            </MudCardContent>
+            <MudCardContent>
+                <MudText>
+                    Müşteri Hizmetleri Standartları
+                </MudText>
+                <a href="/documents/мижозларга_хизмат_кўрсатиш_стандартлари.pdf" target="_blank">мижозларга_хизмат_кўрсатиш_стандартлари.pdf</a>
+            </MudCardContent>
+        </MudPaper>
+    </MudItem>
+    @*
+    <MudItem xs="12" md="6">
+        <MudPaper Class="pa-2 ma-2" Elevation="5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Cake" Title="Cake" />
+                        Doğum Günün Kutlu Olsun
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <hr />
+            <MudCardContent>
+                <Slider _arrows="false" _autocycle="true" _bullets="true" _enableSwipeGesture="true" _sliderHeight="100px">
+                    <ChildContent>
+                        <MudCarouselItem Transition="@Transition.Slide">
+                            <div class="d-flex" style="height:100%">                     
+                                <MudCardHeader>
+                                    <CardHeaderAvatar>
+                                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                                    </CardHeaderAvatar>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.body1">Istra Croatia</MudText>
+                                        <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                            </div>
+                        </MudCarouselItem>
+                         <MudCarouselItem Transition="@Transition.Slide">
+                            <div class="d-flex" style="height:100%">                     
+                                <MudCardHeader>
+                                    <CardHeaderAvatar>
+                                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                                    </CardHeaderAvatar>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.body1">Istra Croatia</MudText>
+                                        <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                            </div>
+                        </MudCarouselItem>
+                        <MudCarouselItem Transition="@Transition.Slide">
+                            <div class="d-flex" style="height:100%">
+                                <MudCardHeader>
+                                    <CardHeaderAvatar>
+                                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                                    </CardHeaderAvatar>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.body1">Istra Croatia</MudText>
+                                        <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                            </div>
+                        </MudCarouselItem>
+                    </ChildContent>
+                </Slider>
+            </MudCardContent>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudPaper Class="pa-2 ma-2" Elevation="5">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.SupportAgent" Title="SupportAgent" />
+                        Teknik Destek Ekibi
+                    </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <hr />
+            <MudCardContent>
+                <Slider _arrows="false" _autocycle="true" _bullets="true" _enableSwipeGesture="true" _sliderHeight="100px">
+                    <ChildContent>
+                        <MudCarouselItem Transition="@Transition.Slide">
+                            <div class="d-flex align-center" style="height:100%">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Istra Croatia</MudText>
+                                    <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            </div>
+                        </MudCarouselItem>
+                        <MudCarouselItem Transition="@Transition.Slide">
+                            <div class="d-flex align-center" style="height:100%">
+                                <MudCardHeader>
+                                    <CardHeaderAvatar>
+                                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                                    </CardHeaderAvatar>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.body1">Istra Croatia</MudText>
+                                        <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                            </div>
+                        </MudCarouselItem>
+                    </ChildContent>
+                </Slider>
+            </MudCardContent>
+        </MudPaper>
+    </MudItem>
+    *@
+</MudGrid>
 
 

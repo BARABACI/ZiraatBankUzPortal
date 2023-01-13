@@ -87,6 +87,15 @@ namespace ZiraatBankUzPortal.Client.Services
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return await _http.SendAsync(request);
         }
+
+        public async Task<HttpResponseMessage> GetEmployeeDepartmentComboBoxData()
+        {
+            string token = await _localStorage.GetItemAsStringAsync("token");
+            token = token.Substring(1, token.Length - 1).Substring(0, token.Length - 2);
+            var request = new HttpRequestMessage(HttpMethod.Get, _http.BaseAddress + "api/Employee/GetEmployeeDepartmentComboBoxData?api-version=1");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            return await _http.SendAsync(request);
+        }
         public async Task<int> GetAuthId()
         {
             var state = await _authStateProvider.GetAuthenticationStateAsync();

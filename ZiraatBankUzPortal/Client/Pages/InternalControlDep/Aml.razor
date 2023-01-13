@@ -1,4 +1,5 @@
-﻿@page "/internalexportexcel"
+﻿@page "/aml"
+@inject IStringLocalizer<Aml> _localizer
 <AuthorizeView Roles="@_pageRoles" Context="internalFormContent">
     <Authorized>
         @if (waitScreen == 1)
@@ -7,19 +8,19 @@
         }
         else
         {
-            <MudPaper Class="pa-6 ma-2" Elevation="10">
-                <h4>Internal Export Excel</h4>
+            <MudPaper Class="pa-4 ma-2" Elevation="10">
+                <h4>@_localizer["AMLText"]</h4>
             </MudPaper>
             <MudPaper Class="pa-6 ma-2" Elevation="10">
                 <MudGrid>
                     <MudItem xs="12" md="12">
-                        <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="Excel"></Button>
+                        <Button OnClickCallback="ExportDataToExcel" _color="Color.Success" _startIcon="@Icons.Custom.FileFormats.FileExcel" _label="@_localizer["ExcelButtonText"]"></Button>
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <DatePicker @bind-DpText="@startdate" _required="true" _requiredError="Start date is required!" _label="Start Date"></DatePicker>
+                        <DatePicker @bind-DpText="@startdate" _required="true" _requiredError="Start date is required!" _label="@_localizer["StartDateText"]"></DatePicker>
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <DatePicker @bind-DpText="@enddate" _required="true" _requiredError="End date is required!" _label="End Date"></DatePicker>
+                        <DatePicker @bind-DpText="@enddate" _required="true" _requiredError="End date is required!" _label="@_localizer["EndDateText"]"></DatePicker>
                     </MudItem>
                 </MudGrid>
             </MudPaper>

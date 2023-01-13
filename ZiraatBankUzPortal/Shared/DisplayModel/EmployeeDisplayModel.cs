@@ -13,6 +13,8 @@ namespace ZiraatBankUzPortal.Shared.DisplayModel
         public int LocationId { get; set; }
         public string? Position { get; set; }
         public int PositionId { get; set; }
+        public string? Department { get; set; }
+        public int DepartmentId { get; set; }
         public DateTime RecordDate { get; set; }
         public string? RecordStatus { get; set; }
         public string? RecordUser { get; set; }
@@ -20,6 +22,8 @@ namespace ZiraatBankUzPortal.Shared.DisplayModel
         public int TitleId { get; set; }
         public DateTime? DateofBirth { get; set; }
         public byte[]? Picture { get; set; }
+        public string? Email { get; set; }
+        public string RegistrationNumber { get; set; }
 
     }
 }

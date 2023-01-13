@@ -78,6 +78,11 @@ namespace ZiraatBankUzPortal.Server.Controllers
             var data = await _employeeDataRepository.GetEmployeeLocationComboBoxData();
             return Ok(data);
         }
-
+        [HttpGet("GetEmployeeDepartmentComboBoxData")]
+        public async Task<ActionResult<EmployeeDepartmentDto>> GetEmployeeDepartmentComboBoxData()
+        {
+            var data = await _employeeDataRepository.GetEmployeeDepartmentComboBoxData();
+            return Ok(data);
+        }
     }
 }

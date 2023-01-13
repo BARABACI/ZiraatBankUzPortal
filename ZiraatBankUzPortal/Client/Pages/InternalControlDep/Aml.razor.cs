@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Microsoft.JSInterop;
-using ZiraatBankUzPortal.Client;
 using ZiraatBankUzPortal.Client.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Authorization;
@@ -35,9 +34,9 @@ using ClosedXML.Excel;
 using MudBlazor.Extensions;
 using System.Globalization;
 
-namespace ZiraatBankUzPortal.Client.Pages
+namespace ZiraatBankUzPortal.Client.Pages.InternalControlDep
 {
-    public partial class InternalExportExcel
+    public partial class Aml
     {
         private List<InternalClientPDisplayModel> clientPModel;
         private List<InternalClientP1DisplayModel> clientP1Model;
@@ -133,19 +132,19 @@ namespace ZiraatBankUzPortal.Client.Pages
                 await GetDataGeneralArgh1Async();
                 if (clientPModel.Count != 0)
                 {
-                    _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalClientPDisplayModel>)clientPModel, "client_p");
+                    _excelService.ExportDataToCustomizeExcelAddWorkSheet(clientPModel, "client_p");
                 }
                 if (clientP1Model.Count != 0)
                 {
-                    _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalClientP1DisplayModel>)clientP1Model, "client_p1");
+                    _excelService.ExportDataToCustomizeExcelAddWorkSheet(clientP1Model, "client_p1");
                 }
                 if (generalArghModel.Count != 0)
                 {
-                    _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalGeneralArghDisplayModel>)generalArghModel, "general_argh");
+                    _excelService.ExportDataToCustomizeExcelAddWorkSheet(generalArghModel, "general_argh");
                 }
                 if (generalArgh1Model.Count != 0)
                 {
-                    _excelService.ExportDataToCustomizeExcelAddWorkSheet((List<InternalGeneralArghDisplayModel>)generalArgh1Model, "general_argh1");
+                    _excelService.ExportDataToCustomizeExcelAddWorkSheet(generalArgh1Model, "general_argh1");
                 }
                 if (clientPModel.Count != 0 || clientP1Model.Count != 0 || generalArghModel.Count != 0 || generalArgh1Model.Count != 0)
                 {

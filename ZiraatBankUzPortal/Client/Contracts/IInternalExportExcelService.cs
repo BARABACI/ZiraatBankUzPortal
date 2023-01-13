@@ -2,7 +2,6 @@
 {
     public interface IInternalExportExcelService
     {
-        Task<HttpResponseMessage> GetAllDataAsync();
         Task<HttpResponseMessage> GetDataClientPAsync();
         Task<HttpResponseMessage> GetDataClientP1Async(string startdate, string enddate);
         Task<HttpResponseMessage> GetDataGeneralArghAsync(string enddate);

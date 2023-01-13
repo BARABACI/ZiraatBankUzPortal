@@ -12,6 +12,7 @@ namespace ZiraatBankUzPortal.Core.Services
         Task<IEnumerable<EmployeeLocationDto>> GetEmployeeLocationComboBoxData();
         Task<IEnumerable<EmployeePositionDto>> GetEmployeePositionComboBoxData();
         Task<IEnumerable<EmployeeTitleDto>> GetEmployeeTitleComboBoxData();
+        Task<IEnumerable<EmployeeDepartmentDto>> GetEmployeeDepartmentComboBoxData();
         Task<LoginUserDisplayModel> GetLoginEmployeeByIdAsync(string userName, string password);
         Task UpdateEmployee(EmployeeUpdateDto employeeModel);
     }

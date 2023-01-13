@@ -1,6 +1,6 @@
 ﻿@page "/employeelist"
 @using System.Net.Http.Headers
-
+@inject IStringLocalizer<EmployeeList> _localizer
 <style>
     .mud-table-container {
         overflow: auto;
@@ -10,27 +10,28 @@
 <br />
 <AuthorizeView Roles="@_pageRoles">
     <Authorized>
-        <MudPaper Class="pa-6 ma-2" Elevation="10">
-            <h4>Employee List</h4>
+        <MudPaper Class="pa-4 mb-2" Elevation="10">
+            <h4>@_localizer["PageHeaderText"]</h4>
         </MudPaper>
         <MudTable Hover="true" Elevation="10" Items="employee" Filter="new Func<EmployeeDisplayModel, bool>(Search)" @bind-user="employee" Striped="true" Dense="true" Bordered="true">
             <ToolBarContent>
                 <div class="justify-center mud-text-align-center">
-                    <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="Reload"></Button>
+                    <Button OnClickCallback="ReloadDataAsync" _color="Color.Secondary" _startIcon="@Icons.Material.Filled.Refresh" _label="@_localizer["BtnReloadText"]"></Button>
+                    <Button OnClickCallback="CreateEmployeeModal" _color="Color.Info" _startIcon="@Icons.Material.Filled.Add" _label="@_localizer["BtnNewText"]"></Button>
                 </div>
                 <MudSpacer />
                 @if (true)
                 {
-                    <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For Employees" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+                    <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="@_localizer["SearchBoxText"]" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
                 }
             </ToolBarContent>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Firstname)">First Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Lastname)">Last Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Title)">Title Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Position)">Position Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.IPT)">IPT Number</MudTableSortLabel></MudTh>
-                <MudTh Style="text-align:right">Actions</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Firstname)">@_localizer["DGFirstName"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Lastname)">@_localizer["DGLastName"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Title)">@_localizer["DGTittleName"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.Position)">@_localizer["DGPositionName"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EmployeeDisplayModel, object>(x => x.IPT)">@_localizer["DGIpt"]</MudTableSortLabel></MudTh>
+                <MudTh Style="text-align:right">@_localizer["DGActions"]</MudTh>
             </HeaderContent>
             <RowTemplate Context="tableRowContext">
                 <MudTd DataLabel="FirstName">
@@ -49,9 +50,9 @@
                     <MudHighlighter Text="@tableRowContext.IPT" HighlightedText="@_searchString" />
                 </MudTd>
                 <MudTd DataLabel="Actions" Style="text-align:right">
-                    <MudMenu Label="Actions" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
-                        <MudMenuItem OnClick="(() => EditEmployeeModal(tableRowContext.Id))">View Profile</MudMenuItem>
-                        <MudMenuItem OnClick="(() => DeleteEmployeeModal(tableRowContext.Id))">Delete Profile</MudMenuItem>
+                    <MudMenu Label="@_localizer["DGActionsButton"]" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
+                        <MudMenuItem OnClick="(() => EditEmployeeModal(tableRowContext.Id))">@_localizer["DGEditButton"]</MudMenuItem>
+                        <MudMenuItem OnClick="(() => DeleteEmployeeModal(tableRowContext.Id))">@_localizer["DGDeleteButton"]</MudMenuItem>
                     </MudMenu>
                 </MudTd>
             </RowTemplate>
